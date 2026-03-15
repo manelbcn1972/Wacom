@@ -644,7 +644,7 @@ function handleModalSubmit(e){
   }
   var data = new FormData(form);
   var sectorName = document.getElementById('modal-sector-input').value;
-  fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(data).toString()})
+  fetch(window.location.pathname, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(data).toString()})
     .then(function(){
       document.getElementById('modal-form-content').style.display = 'none';
       document.getElementById('success-sector-name').textContent = sectorName;
