@@ -138,6 +138,78 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
 .footer-right{text-align:right;}
 .footer-disclaimer{padding:14px 40px 28px;}
 .footer-disclaimer p{font-size:10px;color:rgba(0,0,0,0.28);line-height:1.65;max-width:900px;}
+
+/* ── HAMBURGER MENU ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--black);border-radius:2px;transition:all .25s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+@media(max-width:1024px){
+  .nav{padding:14px 20px;}
+  .section{padding:52px 20px;}
+  .wc-hero{padding:52px 20px 44px;gap:32px;}
+  .wc-hero h1{font-size:40px;}
+  .wc-stats{grid-template-columns:repeat(2,1fr);}
+  .wc-stat-item{padding:20px 24px;}
+  .wc-sectors-grid{grid-template-columns:repeat(2,1fr);}
+  .wc-products-grid{grid-template-columns:repeat(2,1fr);}
+  .wc-features-layout{gap:32px;}
+  .wc-testimonials-grid{grid-template-columns:1fr;}
+  .wc-cta-section{padding:52px 20px;gap:32px;}
+  .footer{padding:40px 20px 0;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+  .footer-disclaimer{padding:12px 20px 24px;}
+}
+
+@media(max-width:768px){
+  .nav{padding:12px 16px;position:relative;}
+  .nav-hamburger{display:flex;}
+  .nav-links{display:none;flex-direction:column;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--white);border-bottom:0.5px solid var(--border);padding:8px 0;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.08);}
+  .nav-links.open{display:flex;}
+  .nav-links li{width:100%;}
+  .nav-links a{display:block;padding:12px 20px;font-size:14px;color:var(--black);border-bottom:0.5px solid var(--border);}
+  .nav-links li:last-child a{border-bottom:none;}
+  .nav-waas{border-radius:0!important;padding:12px 20px!important;}
+  .nav-cta{border-radius:0!important;padding:12px 20px!important;background:var(--dark)!important;}
+  .wc-hero{grid-template-columns:1fr;padding:36px 16px 32px;gap:28px;}
+  .wc-hero h1{font-size:34px;}
+  .wc-hero-desc{font-size:15px;}
+  .wc-hero-visual{display:none;}
+  .wc-stats{grid-template-columns:1fr 1fr;}
+  .wc-stat-item{padding:16px;}
+  .wc-stat-num{font-size:24px;}
+  .section{padding:40px 16px;}
+  .section-title{font-size:28px;}
+  .section-sub{font-size:14px;margin-bottom:28px;}
+  .wc-sectors-grid{grid-template-columns:1fr;}
+  .wc-products-grid{grid-template-columns:1fr;}
+  .wc-features-layout{grid-template-columns:1fr;gap:24px;}
+  .wc-features-callout{position:static;}
+  .wc-testimonials-grid{grid-template-columns:1fr;}
+  .wc-cta-section{grid-template-columns:1fr;padding:40px 16px;gap:24px;}
+  .wc-cta-section h2{font-size:28px;}
+  .wc-form-row{grid-template-columns:1fr;}
+  .wc-logos-section{padding:28px 16px;}
+  .wc-logos-row{gap:20px;}
+  #precios-especiales > div{grid-template-columns:1fr!important;}
+  .footer{padding:32px 16px 0;}
+  .footer-grid{grid-template-columns:1fr;gap:24px;}
+  .footer-bottom{flex-direction:column;gap:8px;}
+  .footer-right{text-align:left;}
+  .footer-disclaimer{padding:12px 16px 24px;}
+}
+
+@media(max-width:480px){
+  .wc-hero h1{font-size:28px;}
+  .section-title{font-size:24px;}
+  .wc-stat-num{font-size:20px;}
+  .wc-cta-section h2{font-size:24px;}
+  .btn-primary,.btn-ghost{padding:11px 20px;font-size:13px;width:100%;text-align:center;display:block;}
+  .wc-hero-actions{flex-direction:column;}
+}
+
 </style>
 </head>
 <body>
@@ -151,7 +223,10 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
       <img class="logo-wacom" src="assets/wacom-logo.gif" alt="Wacom"/>
     </div>
   </div>
-  <ul class="nav-links">
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#" class="active">Soluciones</a></li>
     <li><a href="#sectores">Sectores</a></li>
     <li><a href="#productos">Productos</a></li>
@@ -493,5 +568,21 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
   <p>Las marcas Wacom®, Cintiq®, Intuos® y STU® son propiedad exclusiva de Wacom Co., Ltd. CONTECNOW actúa como distribuidor y partner autorizado independiente y no forma parte del grupo Wacom. Los precios indicados son orientativos y no constituyen oferta vinculante. IVA no incluido.</p>
 </div>
 </div>
+
+<script>
+function toggleMenu(){
+  var btn=document.getElementById('hamburger');
+  var links=document.getElementById('nav-links');
+  btn.classList.toggle('open');
+  links.classList.toggle('open');
+}
+// Close menu on link click
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click',function(){
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('nav-links').classList.remove('open');
+  });
+});
+</script>
 </body>
 </html>
