@@ -408,6 +408,51 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
 </div>
 
 <script>
+
+var PERSONAL_DOMAINS = ['gmail.com','hotmail.com','hotmail.es','outlook.com','outlook.es',
+  'yahoo.com','yahoo.es','icloud.com','me.com','mac.com','live.com','live.es',
+  'msn.com','aol.com','gmx.com','gmx.es','protonmail.com','proton.me',
+  'tutanota.com','yandex.com','mail.com','inbox.com','terra.es','telefonica.net',
+  'orange.es','vodafone.es','ono.com','euskaltel.com','jazztel.es'];
+
+function isCorporateEmail(email){
+  var domain = email.split('@')[1];
+  if(!domain) return false;
+  return !PERSONAL_DOMAINS.includes(domain.toLowerCase());
+}
+
+document.querySelectorAll('form[data-netlify]').forEach(function(form){
+  form.addEventListener('submit', function(e){
+    var emailInput = form.querySelector('input[type="email"]');
+    if(!emailInput) return;
+    if(!isCorporateEmail(emailInput.value)){
+      e.preventDefault();
+      emailInput.style.borderColor = '#D85A30';
+      var err = emailInput.parentNode.querySelector('.email-error');
+      if(!err){
+        var errEl = document.createElement('p');
+        errEl.className = 'email-error';
+        errEl.style.cssText = 'font-size:11px;color:#D85A30;margin-top:4px;';
+        errEl.textContent = 'Use un email corporativo. No se aceptan Gmail, Hotmail, etc.';
+        emailInput.parentNode.appendChild(errEl);
+      }
+      emailInput.focus();
+    } else {
+      emailInput.style.borderColor = '';
+      var err = emailInput.parentNode.querySelector('.email-error');
+      if(err) err.remove();
+    }
+  });
+  var emailInput = form.querySelector('input[type="email"]');
+  if(emailInput){
+    emailInput.addEventListener('input', function(){
+      this.style.borderColor = '';
+      var err = this.parentNode.querySelector('.email-error');
+      if(err) err.remove();
+    });
+  }
+});
+
 const devices={
   stu300:{name:'STU-300/430',hwBase:10,swBase:3},
   stu540:{name:'STU-540',hwBase:18,swBase:4},

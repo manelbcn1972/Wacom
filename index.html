@@ -609,9 +609,39 @@ function closeSectorModal(e){
     document.body.style.overflow = '';
   }
 }
+// Blocked personal email domains
+var PERSONAL_DOMAINS = ['gmail.com','hotmail.com','hotmail.es','outlook.com','outlook.es',
+  'yahoo.com','yahoo.es','icloud.com','me.com','mac.com','live.com','live.es',
+  'msn.com','aol.com','gmx.com','gmx.es','protonmail.com','proton.me',
+  'tutanota.com','yandex.com','mail.com','inbox.com','terra.es','telefonica.net',
+  'orange.es','vodafone.es','ono.com','euskaltel.com','jazztel.es'];
+
+function isCorporateEmail(email){
+  var domain = email.split('@')[1];
+  if(!domain) return false;
+  return !PERSONAL_DOMAINS.includes(domain.toLowerCase());
+}
+
 function handleModalSubmit(e){
   e.preventDefault();
   var form = e.target;
+  var emailInput = form.querySelector('input[name="email"]');
+  if(!isCorporateEmail(emailInput.value)){
+    emailInput.style.borderColor = '#D85A30';
+    var errMsg = emailInput.parentNode.querySelector('.email-error');
+    if(!errMsg){
+      var err = document.createElement('p');
+      err.className = 'email-error';
+      err.style.cssText = 'font-size:11px;color:#D85A30;margin-top:4px;';
+      err.textContent = 'Por favor, use un email corporativo. No se aceptan emails personales (Gmail, Hotmail, etc.)';
+      emailInput.parentNode.appendChild(err);
+    }
+    return;
+  } else {
+    emailInput.style.borderColor = '';
+    var errMsg = emailInput.parentNode.querySelector('.email-error');
+    if(errMsg) errMsg.remove();
+  }
   var data = new FormData(form);
   var sectorName = document.getElementById('modal-sector-input').value;
   fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(data).toString()})
@@ -644,6 +674,41 @@ document.addEventListener('keydown', function(e){
 </script>
 
 <script>
+
+// Corporate email validation for all static forms
+document.querySelectorAll('form[data-netlify]').forEach(function(form){
+  form.addEventListener('submit', function(e){
+    var emailInput = form.querySelector('input[type="email"]');
+    if(!emailInput) return;
+    if(!isCorporateEmail(emailInput.value)){
+      e.preventDefault();
+      emailInput.style.borderColor = '#D85A30';
+      var err = emailInput.parentNode.querySelector('.email-error');
+      if(!err){
+        var errEl = document.createElement('p');
+        errEl.className = 'email-error';
+        errEl.style.cssText = 'font-size:11px;color:#D85A30;margin-top:4px;';
+        errEl.textContent = 'Use un email corporativo. No se aceptan Gmail, Hotmail, etc.';
+        emailInput.parentNode.appendChild(errEl);
+      }
+      emailInput.focus();
+    } else {
+      emailInput.style.borderColor = '';
+      var err = emailInput.parentNode.querySelector('.email-error');
+      if(err) err.remove();
+    }
+  });
+  // Clear error on input
+  var emailInput = form.querySelector('input[type="email"]');
+  if(emailInput){
+    emailInput.addEventListener('input', function(){
+      this.style.borderColor = '';
+      var err = this.parentNode.querySelector('.email-error');
+      if(err) err.remove();
+    });
+  }
+});
+
 function toggleMenu(){
   var btn=document.getElementById('hamburger');
   var links=document.getElementById('nav-links');
