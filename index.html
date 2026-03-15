@@ -279,20 +279,24 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
   </div>
   <div class="wc-form-card">
     <p class="wc-form-title">Solicitar demostración gratuita</p>
-    <div class="wc-form-row">
-      <div class="wc-form-field"><label>Nombre</label><input type="text" placeholder="María García"/></div>
-      <div class="wc-form-field"><label>Apellidos</label><input type="text" placeholder="López Martínez"/></div>
-    </div>
-    <div class="wc-form-row">
-      <div class="wc-form-field"><label>Email corporativo</label><input type="email" placeholder="m.garcia@empresa.com"/></div>
-      <div class="wc-form-field"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"/></div>
-    </div>
-    <div class="wc-form-row">
-      <div class="wc-form-field"><label>Sector</label><select><option>Corporativo / Legal</option><option>Banca / Finanzas</option><option>Salud / Sanidad</option><option>Arquitectura / CAD</option><option>Recursos Humanos</option><option>Seguros / Compliance</option></select></div>
-      <div class="wc-form-field"><label>Nº de usuarios</label><select><option>1 – 10</option><option>11 – 50</option><option>51 – 200</option><option>200+</option></select></div>
-    </div>
-    <button class="wc-form-submit">Solicitar demostración gratuita</button>
-    <p class="wc-form-legal">Sus datos se tratan conforme al RGPD. No se cederán a terceros.</p>
+    <form name="demo-contecnow" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gracias.html">
+      <input type="hidden" name="form-name" value="demo-contecnow"/>
+      <p style="display:none;"><label>No rellenar: <input name="bot-field"/></label></p>
+      <div class="wc-form-row">
+        <div class="wc-form-field"><label>Nombre</label><input type="text" name="nombre" placeholder="María García" required/></div>
+        <div class="wc-form-field"><label>Apellidos</label><input type="text" name="apellidos" placeholder="López Martínez" required/></div>
+      </div>
+      <div class="wc-form-row">
+        <div class="wc-form-field"><label>Email corporativo</label><input type="email" name="email" placeholder="m.garcia@empresa.com" required/></div>
+        <div class="wc-form-field"><label>Empresa</label><input type="text" name="empresa" placeholder="Nombre de la empresa" required/></div>
+      </div>
+      <div class="wc-form-row">
+        <div class="wc-form-field"><label>Sector</label><select name="sector"><option>Corporativo / Legal</option><option>Banca / Finanzas</option><option>Salud / Sanidad</option><option>Arquitectura / CAD</option><option>Recursos Humanos</option><option>Seguros / Compliance</option></select></div>
+        <div class="wc-form-field"><label>Nº de usuarios</label><select name="usuarios"><option>1 – 10</option><option>11 – 50</option><option>51 – 200</option><option>200+</option></select></div>
+      </div>
+      <button type="submit" class="wc-form-submit">Solicitar demostración gratuita</button>
+      <p class="wc-form-legal">Sus datos se tratan conforme al RGPD. No se cederán a terceros.</p>
+    </form>
   </div>
 </div>
 
