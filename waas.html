@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONTECNOW · Wacom as a Service (WaaS)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--black:#0A0A0A;--dark:#17233A;--gray:#6B6B6B;--light:#F4F3F0;--white:#FFFFFF;--accent:#1A3A5C;--accent2:#4A8FA8;--border:rgba(0,0,0,0.10);--fd:'DM Serif Display',serif;--fb:'DM Sans',sans-serif;}
+body{font-family:var(--fb);color:var(--black);background:var(--white);}
+.site{max-width:1100px;margin:0 auto;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:0.5px solid var(--border);background:var(--white);position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:16px;}
+.nav-logo img.logo-contec{height:32px;width:auto;}
+.nav-divider{width:0.5px;height:24px;background:rgba(0,0,0,0.15);}
+.nav-partner{display:flex;flex-direction:column;gap:1px;}
+.nav-partner-label{font-size:9px;color:var(--gray);letter-spacing:0.10em;text-transform:uppercase;}
+.nav-partner img.logo-wacom{height:14px;width:auto;opacity:0.55;}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center;}
+.nav-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--black);}
+.nav-links a.active{font-weight:500;}
+.nav-waas{background:var(--accent2);color:var(--white)!important;padding:7px 16px;border-radius:2px;font-size:13px!important;font-weight:500!important;}
+.nav-cta{background:var(--black);color:var(--white)!important;padding:7px 16px;border-radius:2px;font-size:13px!important;font-weight:500!important;}
+.waas-hero{padding:72px 40px 64px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;border-bottom:0.5px solid var(--border);background:var(--dark);}
+.waas-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;}
+.waas-hero h1{font-family:var(--fd);font-size:48px;line-height:1.10;font-weight:400;color:var(--white);margin-bottom:20px;}
+.waas-hero h1 em{font-style:italic;color:rgba(255,255,255,0.40);}
+.waas-hero-desc{font-size:15px;line-height:1.75;color:rgba(255,255,255,0.58);margin-bottom:32px;max-width:420px;}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;}
+.pill{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.72);font-size:12px;padding:6px 14px;border-radius:2px;border:0.5px solid rgba(255,255,255,0.11);}
+.pill-accent{background:rgba(74,143,168,0.22);color:#8ecfe0;border-color:rgba(74,143,168,0.3);}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-accent{background:var(--accent2);color:var(--white);padding:12px 28px;border-radius:2px;font-size:14px;font-weight:500;border:none;cursor:pointer;transition:opacity .2s;}
+.btn-accent:hover{opacity:.85;}
+.btn-ghost{background:transparent;color:rgba(255,255,255,0.75);padding:12px 28px;border-radius:2px;font-size:14px;border:0.5px solid rgba(255,255,255,0.18);cursor:pointer;}
+.partner-badge{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.10);border-radius:3px;padding:14px 16px;display:flex;align-items:center;gap:14px;margin-top:20px;}
+.partner-badge img{height:18px;width:auto;filter:brightness(0) invert(1);opacity:0.55;}
+.partner-badge p{font-size:12px;color:rgba(255,255,255,0.50);line-height:1.5;}
+.partner-badge strong{color:rgba(255,255,255,0.80);font-weight:500;}
+.waas-visual{display:flex;flex-direction:column;gap:12px;}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.kpi{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.09);border-radius:4px;padding:20px;}
+.kpi-val{font-family:var(--fd);font-size:32px;color:var(--white);font-weight:400;display:block;margin-bottom:4px;}
+.kpi-val span{font-size:16px;color:var(--accent2);}
+.kpi-label{font-size:12px;color:rgba(255,255,255,0.40);}
+.kpi-wide{grid-column:1/-1;background:rgba(74,143,168,0.10);border-color:rgba(74,143,168,0.22);}
+.kpi-wide .kpi-val{font-size:20px;color:#8ecfe0;}
+.section{padding:64px 40px;border-bottom:0.5px solid var(--border);}
+.section-tag{font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block;}
+.section-title{font-family:var(--fd);font-size:34px;font-weight:400;line-height:1.15;color:var(--black);margin-bottom:12px;}
+.section-title em{font-style:italic;color:var(--gray);}
+.section-sub{font-size:15px;color:var(--gray);line-height:1.7;max-width:540px;margin-bottom:44px;}
+.bundle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:4px;overflow:hidden;}
+.bundle-item{background:var(--white);padding:28px 24px;}
+.bundle-num{font-family:var(--fd);font-size:42px;color:var(--light);font-weight:400;line-height:1;margin-bottom:12px;}
+.bundle-item h4{font-size:15px;font-weight:500;color:var(--black);margin-bottom:8px;}
+.bundle-item p{font-size:13px;color:var(--gray);line-height:1.6;}
+.blist{list-style:none;margin-top:10px;}
+.blist li{font-size:12px;color:var(--gray);padding:5px 0;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px;}
+.blist li::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--accent2);flex-shrink:0;}
+.calc-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+.calc-card{background:var(--light);border-radius:4px;padding:36px;}
+.calc-card h3{font-family:var(--fd);font-size:22px;font-weight:400;margin-bottom:28px;color:var(--black);}
+.calc-row{margin-bottom:24px;}
+.calc-label{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--gray);margin-bottom:10px;}
+.calc-label strong{font-size:14px;font-weight:500;color:var(--black);}
+input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radius:2px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opt{background:var(--white);border:0.5px solid rgba(0,0,0,0.2);border-radius:2px;padding:7px 14px;font-size:13px;cursor:pointer;font-family:var(--fb);color:var(--black);transition:all .15s;}
+.opt.active,.opt:hover{background:var(--dark);color:var(--white);border-color:var(--dark);}
+.calc-result{background:var(--dark);border-radius:4px;padding:36px;color:var(--white);position:sticky;top:80px;}
+.res-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;}
+.res-cuota{font-family:var(--fd);font-size:52px;font-weight:400;color:var(--white);line-height:1;margin-bottom:4px;}
+.res-cuota span{font-size:18px;color:rgba(255,255,255,0.40);}
+.res-periodo{font-size:13px;color:rgba(255,255,255,0.40);margin-bottom:28px;}
+.res-breakdown{list-style:none;margin-bottom:28px;}
+.res-breakdown li{display:flex;justify-content:space-between;font-size:13px;padding:10px 0;border-bottom:0.5px solid rgba(255,255,255,0.07);}
+.res-breakdown li span:first-child{color:rgba(255,255,255,0.50);}
+.res-breakdown li span:last-child{color:var(--white);font-weight:500;}
+.res-note{font-size:11px;color:rgba(255,255,255,0.28);line-height:1.6;margin-bottom:24px;}
+.btn-light{background:var(--white);color:var(--black);padding:10px 22px;border-radius:2px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:var(--fb);width:100%;text-align:center;transition:opacity .2s;display:block;}
+.btn-light:hover{opacity:.85;}
+.comp-table{width:100%;border-collapse:collapse;border:0.5px solid var(--border);border-radius:4px;overflow:hidden;}
+.comp-table thead{background:var(--dark);color:var(--white);}
+.comp-table th{padding:16px 20px;font-size:13px;font-weight:500;text-align:left;letter-spacing:0.04em;}
+.comp-table th:not(:first-child){text-align:center;}
+.comp-table td{padding:14px 20px;font-size:13px;border-bottom:0.5px solid var(--border);color:var(--gray);}
+.comp-table td:first-child{font-weight:500;color:var(--black);}
+.comp-table td:not(:first-child){text-align:center;}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table tr:nth-child(even) td{background:rgba(0,0,0,0.015);}
+.cy{color:#1D9E75;font-size:16px;}.cn{color:#D85A30;}.cp{color:#BA7517;}
+.waas-col{background:rgba(74,143,168,0.05)!important;}
+.waas-head{background:var(--accent2)!important;}
+.badge-rec{display:inline-block;background:rgba(255,255,255,0.18);color:var(--white);font-size:10px;font-weight:500;padding:2px 8px;border-radius:2px;margin-left:6px;letter-spacing:0.06em;vertical-align:middle;}
+.form-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.form-intro h3{font-family:var(--fd);font-size:28px;font-weight:400;line-height:1.2;margin-bottom:14px;color:var(--black);}
+.form-intro h3 em{font-style:italic;color:var(--gray);}
+.form-intro p{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:24px;}
+.fbullets{list-style:none;}
+.fbullets li{font-size:13px;color:var(--gray);padding:9px 0;border-bottom:0.5px solid var(--border);display:flex;gap:10px;align-items:flex-start;}
+.fbullets li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent2);flex-shrink:0;margin-top:5px;}
+.form-card{background:var(--white);border:0.5px solid var(--border);border-radius:4px;padding:32px;}
+.form-tag{display:inline-block;background:rgba(74,143,168,0.10);color:var(--accent2);font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:20px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.frow-full{margin-bottom:12px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:11px;font-weight:500;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;}
+.field input,.field select,.field textarea{border:0.5px solid rgba(0,0,0,0.18);border-radius:2px;padding:9px 12px;font-family:var(--fb);font-size:13px;color:var(--black);background:var(--white);outline:none;height:auto;transition:border-color .2s;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent2);}
+.field textarea{resize:vertical;min-height:72px;}
+.form-submit{width:100%;background:var(--dark);color:var(--white);padding:13px;border-radius:2px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:var(--fb);margin-top:16px;transition:opacity .2s;}
+.form-submit:hover{opacity:.80;}
+.form-legal{font-size:11px;color:var(--gray);text-align:center;margin-top:10px;line-height:1.5;}
+.footer{padding:48px 40px 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:0.5px solid var(--border);}
+.footer-brand img.logo-footer{height:28px;width:auto;margin-bottom:10px;display:block;}
+.footer-brand-sub{font-size:10px;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;display:block;}
+.footer-brand-desc{font-size:12px;color:var(--gray);line-height:1.7;max-width:220px;margin-bottom:16px;}
+.footer-wacom-tag{display:inline-flex;align-items:center;gap:8px;background:#F4F3F0;border:0.5px solid rgba(0,0,0,0.10);border-radius:2px;padding:6px 12px;}
+.footer-wacom-tag img{height:12px;width:auto;opacity:0.5;}
+.footer-wacom-tag span{font-size:10px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;}
+.footer-col h5{font-size:11px;font-weight:500;letter-spacing:0.10em;text-transform:uppercase;color:var(--black);margin-bottom:16px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:10px;}
+.footer-col a{font-size:13px;color:var(--gray);text-decoration:none;transition:color .2s;}
+.footer-col a:hover{color:var(--black);}
+.footer-bottom{padding:20px 0;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;border-top:0.5px solid var(--border);}
+.footer-legal p,.footer-right p{font-size:11px;color:var(--gray);line-height:1.6;}
+.footer-right{text-align:right;}
+.footer-disclaimer{padding:14px 40px 28px;}
+.footer-disclaimer p{font-size:10px;color:rgba(0,0,0,0.28);line-height:1.65;max-width:900px;}
+</style>
+</head>
+<body>
+<div class="site">
+<nav class="nav">
+  <div class="nav-logo">
+    <img class="logo-contec" src="assets/contecnow-logo.png" alt="CONTECNOW"/>
+    <div class="nav-divider"></div>
+    <div class="nav-partner">
+      <span class="nav-partner-label">Partner oficial</span>
+      <img class="logo-wacom" src="assets/wacom-logo.gif" alt="Wacom"/>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Soluciones</a></li>
+    <li><a href="index.html#sectores">Sectores</a></li>
+    <li><a href="index.html#productos">Productos</a></li>
+    <li><a href="waas.html" class="nav-waas active">WaaS</a></li>
+    <li><a href="index.html#testimoniales">Casos de éxito</a></li>
+    <li><a href="index.html#contacto" class="nav-cta">Contactar</a></li>
+  </ul>
+</nav>
+
+<section class="waas-hero">
+  <div>
+    <p class="waas-eyebrow">Wacom as a Service · WaaS</p>
+    <h1>Todo Wacom.<br><em>Sin inversión</em><br>inicial.</h1>
+    <p class="waas-hero-desc">Hardware certificado, licencias y mantenimiento en una única cuota mensual predecible. Contrato 4 años. Gestionado por CONTECNOW, partner oficial Wacom.</p>
+    <div class="pills">
+      <span class="pill pill-accent">100% OPEX</span>
+      <span class="pill">Hardware incluido</span>
+      <span class="pill">Licencias incluidas</span>
+      <span class="pill">Mantenimiento SLA</span>
+      <span class="pill">Sustitución &lt;24h</span>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-accent" onclick="document.getElementById('calc').scrollIntoView({behavior:'smooth'})">Calcular mi cuota</button>
+      <button class="btn-ghost" onclick="document.getElementById('form-waas').scrollIntoView({behavior:'smooth'})">Solicitar oferta</button>
+    </div>
+    <div class="partner-badge">
+      <img src="assets/wacom-logo.gif" alt="Wacom"/>
+      <p><strong>CONTECNOW</strong> es distribuidor y partner oficial de Wacom para empresas en España. Ofrecemos WaaS con respaldo técnico y comercial propio.</p>
+    </div>
+  </div>
+  <div class="waas-visual">
+    <div class="kpi-row">
+      <div class="kpi"><span class="kpi-val">0 €<span> CAPEX</span></span><span class="kpi-label">Sin inversión inicial en hardware</span></div>
+      <div class="kpi"><span class="kpi-val">48<span> meses</span></span><span class="kpi-label">Precio bloqueado. Sin sorpresas.</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi"><span class="kpi-val">+30%</span><span class="kpi-label">Ahorro estimado vs compra directa</span></div>
+      <div class="kpi"><span class="kpi-val">&lt;24h</span><span class="kpi-label">Sustitución garantizada en avería</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi kpi-wide"><span class="kpi-val">Hardware + Licencias + Mantenimiento + Soporte</span><span class="kpi-label">Todo gestionado por CONTECNOW. Una factura. Sin letra pequeña.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <span class="section-tag">El bundle WaaS</span>
+  <h2 class="section-title">Todo incluido<br><em>en la cuota mensual</em></h2>
+  <p class="section-sub">CONTECNOW gestiona hardware, licencias, soporte y mantenimiento. Un único interlocutor para toda la relación.</p>
+  <div class="bundle-grid">
+    <div class="bundle-item"><div class="bundle-num">01</div><h4>Hardware certificado Wacom</h4><p>Dispositivos Wacom nuevos de gama profesional, configurados por CONTECNOW y listos desde el primer día.</p><ul class="blist"><li>Tabletas de firma STU o Intuos Pro</li><li>Pantallas Cintiq Pro (si aplica)</li><li>Accesorios y cables incluidos</li><li>Envío e instalación en sede</li><li>Reposición al finalizar contrato</li></ul></div>
+    <div class="bundle-item"><div class="bundle-num">02</div><h4>Licencias de software</h4><p>Acceso completo al ecosistema Wacom durante toda la vigencia, gestionado y actualizado por CONTECNOW.</p><ul class="blist"><li>Wacom Sign Pro PDF</li><li>SDK de integración empresarial</li><li>Driver corporativo con MDM</li><li>Actualizaciones automáticas</li><li>Portal de administración fleet</li></ul></div>
+    <div class="bundle-item"><div class="bundle-num">03</div><h4>Mantenimiento y soporte</h4><p>SLA garantizado con soporte técnico propio de CONTECNOW y sustitución sin coste adicional.</p><ul class="blist"><li>Soporte técnico dedicado 8×5</li><li>Sustitución en menos de 24h laborables</li><li>Revisión preventiva anual</li><li>Account manager asignado</li><li>Formación inicial incluida</li></ul></div>
+  </div>
+</section>
+
+<section class="section" id="calc">
+  <span class="section-tag">Calculadora WaaS</span>
+  <h2 class="section-title">Estime su cuota<br><em>en segundos</em></h2>
+  <p class="section-sub">Configure su bundle y obtenga una estimación orientativa. CONTECNOW emitirá oferta formal vinculante adaptada a su empresa.</p>
+  <div class="calc-layout">
+    <div class="calc-card">
+      <h3>Configurar bundle</h3>
+      <div class="calc-row">
+        <div class="calc-label"><span>Tipo de dispositivo principal</span></div>
+        <div class="opts" id="device-opts">
+          <button class="opt active" data-val="stu540" onclick="setDevice(this)">STU-540 (firma)</button>
+          <button class="opt" data-val="intuos" onclick="setDevice(this)">Intuos Pro M</button>
+          <button class="opt" data-val="cintiq" onclick="setDevice(this)">Cintiq Pro 27</button>
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label"><span>Número de dispositivos</span><strong id="units-val">10 unidades</strong></div>
+        <input type="range" min="1" max="200" value="10" step="1" id="units-slider" oninput="updateCalc()"/>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-top:6px;"><span>1</span><span>50</span><span>100</span><span>200</span></div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label"><span>Nivel de servicio</span></div>
+        <div class="opts" id="service-opts">
+          <button class="opt" data-val="base" onclick="setService(this)">Base</button>
+          <button class="opt active" data-val="standard" onclick="setService(this)">Standard</button>
+          <button class="opt" data-val="premium" onclick="setService(this)">Premium</button>
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label"><span>Sector</span></div>
+        <div class="opts" id="sector-opts">
+          <button class="opt active" data-val="corp" onclick="setSector(this)">Corporativo</button>
+          <button class="opt" data-val="health" onclick="setSector(this)">Salud</button>
+          <button class="opt" data-val="cad" onclick="setSector(this)">CAD / Diseño</button>
+        </div>
+      </div>
+      <div style="background:rgba(74,143,168,0.07);border:0.5px solid rgba(74,143,168,0.18);border-radius:3px;padding:14px 16px;margin-top:8px;">
+        <p style="font-size:12px;color:var(--gray);line-height:1.6;">Estimación orientativa de CONTECNOW. El precio vinculante se emite previa solicitud formal. IVA no incluido.</p>
+      </div>
+    </div>
+    <div class="calc-result">
+      <p class="res-label">Cuota mensual estimada</p>
+      <div class="res-cuota" id="cuota-total">—<span>/mes</span></div>
+      <p class="res-periodo" id="cuota-periodo">Contrato 48 meses · IVA no incluido</p>
+      <ul class="res-breakdown">
+        <li><span>Hardware (amortización)</span><span id="bd-hw">—</span></li>
+        <li><span>Licencias de software</span><span id="bd-sw">—</span></li>
+        <li><span>Mantenimiento y SLA</span><span id="bd-mnt">—</span></li>
+        <li><span>Coste por unidad/mes</span><span id="bd-unit">—</span></li>
+        <li><span>Ahorro estimado a 4 años</span><span id="bd-saving" style="color:#5DCAA5;">—</span></li>
+      </ul>
+      <p class="res-note">Precio bloqueado 48 meses. Oferta formal emitida por CONTECNOW tras análisis de su caso.</p>
+      <button class="btn-light" onclick="document.getElementById('form-waas').scrollIntoView({behavior:'smooth'})">Solicitar oferta formal →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <span class="section-tag">Comparativa</span>
+  <h2 class="section-title">Compra directa<br><em>vs WaaS con CONTECNOW</em></h2>
+  <p class="section-sub">Evalúe el coste total de propiedad a 4 años antes de decidir.</p>
+  <table class="comp-table">
+    <thead><tr><th style="width:35%;">Criterio</th><th>Compra directa</th><th class="waas-head">WaaS · CONTECNOW <span class="badge-rec">Recomendado</span></th></tr></thead>
+    <tbody>
+      <tr><td>Inversión inicial (CAPEX)</td><td>Alta — pago total al inicio</td><td class="waas-col"><span class="cy">✓</span> 0 € — 100% OPEX</td></tr>
+      <tr><td>Previsibilidad del gasto</td><td><span class="cp">~</span> Variable (reparaciones, licencias)</td><td class="waas-col"><span class="cy">✓</span> Cuota fija 48 meses</td></tr>
+      <tr><td>Licencias de software</td><td><span class="cn">✗</span> Coste adicional, renovación anual</td><td class="waas-col"><span class="cy">✓</span> Incluidas y actualizadas</td></tr>
+      <tr><td>Mantenimiento y reparaciones</td><td><span class="cn">✗</span> Coste adicional o garantía limitada</td><td class="waas-col"><span class="cy">✓</span> Incluido con SLA 24h</td></tr>
+      <tr><td>Sustitución por avería</td><td><span class="cn">✗</span> Tiempo y coste variables</td><td class="waas-col"><span class="cy">✓</span> &lt;24h laborables garantizado</td></tr>
+      <tr><td>Renovación de hardware</td><td><span class="cn">✗</span> Nueva inversión al final de vida</td><td class="waas-col"><span class="cy">✓</span> Hardware nuevo al vencimiento</td></tr>
+      <tr><td>Interlocutor único</td><td><span class="cp">~</span> Varios proveedores y contratos</td><td class="waas-col"><span class="cy">✓</span> Solo CONTECNOW</td></tr>
+      <tr><td>Escalabilidad de flota</td><td><span class="cp">~</span> Nuevas compras por separado</td><td class="waas-col"><span class="cy">✓</span> Ampliación sin penalización</td></tr>
+      <tr><td>Impacto fiscal</td><td><span class="cp">~</span> Amortización contable (5–7 años)</td><td class="waas-col"><span class="cy">✓</span> Gasto corriente deducible al 100%</td></tr>
+      <tr><td>Riesgo de obsolescencia</td><td><span class="cn">✗</span> Alto — hardware propio envejece</td><td class="waas-col"><span class="cy">✓</span> Siempre en generación actual</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section" id="form-waas" style="background:var(--light);">
+  <div class="form-layout">
+    <div class="form-intro">
+      <h3>Solicite su oferta<br>WaaS <em>a CONTECNOW.</em></h3>
+      <p>Nuestro equipo preparará una propuesta detallada con cuota exacta, condiciones del SLA y plan de implementación. Respuesta en menos de 48 horas laborables.</p>
+      <ul class="fbullets">
+        <li>Oferta vinculante con precio bloqueado a 4 años</li>
+        <li>Piloto gratuito 30 días para flotas de más de 10 dispositivos</li>
+        <li>Análisis de ahorro vs situación actual sin coste</li>
+        <li>Integración técnica valorada por nuestro equipo</li>
+        <li>Soporte post-venta gestionado directamente por CONTECNOW</li>
+      </ul>
+    </div>
+    <div class="form-card">
+      <span class="form-tag">Oferta WaaS gratuita · CONTECNOW</span>
+      <div class="frow">
+        <div class="field"><label>Nombre</label><input type="text" placeholder="Nombre"/></div>
+        <div class="field"><label>Apellidos</label><input type="text" placeholder="Apellidos"/></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>Email corporativo</label><input type="email" placeholder="nombre@empresa.com"/></div>
+        <div class="field"><label>Teléfono</label><input type="tel" placeholder="+34 600 000 000"/></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>Empresa</label><input type="text" placeholder="Nombre empresa"/></div>
+        <div class="field"><label>Sector</label><select><option>Corporativo / Legal</option><option>Banca / Finanzas</option><option>Salud / Sanidad</option><option>Arquitectura / CAD</option><option>Recursos Humanos</option><option>Seguros / Compliance</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>Dispositivos estimados</label><select><option>1 – 10 dispositivos</option><option>11 – 50 dispositivos</option><option>51 – 200 dispositivos</option><option>200+ dispositivos</option></select></div>
+        <div class="field"><label>Modelo de interés</label><select><option>STU-540 (firma electrónica)</option><option>Intuos Pro M (movilidad)</option><option>Cintiq Pro 27 (CAD/diseño)</option><option>Mix de modelos</option></select></div>
+      </div>
+      <div class="frow-full"><div class="field"><label>¿Qué proceso quiere digitalizar?</label><textarea placeholder="Ej: firma de contratos en 20 oficinas, consentimientos informados en clínica..."></textarea></div></div>
+      <button class="form-submit">Solicitar oferta WaaS a CONTECNOW</button>
+      <p class="form-legal">Sus datos serán tratados por CONTECNOW conforme al RGPD (UE) 2016/679. No se cederán a terceros.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img class="logo-footer" src="assets/contecnow-logo.png" alt="CONTECNOW"/>
+      <span class="footer-brand-sub">Partner oficial Wacom · España</span>
+      <p class="footer-brand-desc">Distribuidor y partner oficial de Wacom para empresas en España. Soluciones de firma electrónica, hardware profesional y programa WaaS.</p>
+      <div class="footer-wacom-tag"><img src="assets/wacom-logo.gif" alt="Wacom"/><span>Authorized Business Partner</span></div>
+    </div>
+    <div class="footer-col"><h5>Soluciones</h5><ul><li><a href="index.html">Firma electrónica</a></li><li><a href="index.html">Captura de datos</a></li><li><a href="index.html">Integración SDK</a></li><li><a href="waas.html">WaaS · Renting</a></li></ul></div>
+    <div class="footer-col"><h5>Sectores</h5><ul><li><a href="index.html#sectores">Banca y Finanzas</a></li><li><a href="index.html#sectores">Salud</a></li><li><a href="index.html#sectores">Arquitectura y CAD</a></li><li><a href="index.html#sectores">Legal y Compliance</a></li></ul></div>
+    <div class="footer-col"><h5>CONTECNOW</h5><ul><li><a href="#">Quiénes somos</a></li><li><a href="#">Otros fabricantes</a></li><li><a href="#">Soporte técnico</a></li><li><a href="#">Aviso legal</a></li><li><a href="#">Política de privacidad</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal"><p>© 2026 CONTECNOW · Todos los derechos reservados.</p><p>España · Inscrita en el Registro Mercantil correspondiente.</p></div>
+    <div class="footer-right"><p>Wacom® es marca registrada de Wacom Co., Ltd.</p><p>CONTECNOW actúa como distribuidor autorizado independiente.</p></div>
+  </div>
+</footer>
+<div class="footer-disclaimer">
+  <p>Las marcas Wacom®, Cintiq®, Intuos® y STU® son propiedad exclusiva de Wacom Co., Ltd. CONTECNOW actúa como distribuidor y partner autorizado independiente y no forma parte del grupo Wacom. Las estimaciones de la calculadora son orientativas y no constituyen oferta vinculante. IVA no incluido.</p>
+</div>
+</div>
+
+<script>
+const devices={stu540:{name:'STU-540',hwBase:18,swBase:4},intuos:{name:'Intuos Pro M',hwBase:22,swBase:5},cintiq:{name:'Cintiq Pro 27',hwBase:75,swBase:12}};
+const services={base:1.0,standard:1.18,premium:1.38};
+const sectors={corp:1.0,health:1.10,cad:1.08};
+let curDevice='stu540',curService='standard',curSector='corp';
+function fmt(n){return Math.round(n).toLocaleString('es-ES')+' €';}
+function setDevice(el){document.querySelectorAll('#device-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curDevice=el.dataset.val;updateCalc();}
+function setService(el){document.querySelectorAll('#service-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curService=el.dataset.val;updateCalc();}
+function setSector(el){document.querySelectorAll('#sector-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curSector=el.dataset.val;updateCalc();}
+function updateCalc(){
+  const units=parseInt(document.getElementById('units-slider').value);
+  document.getElementById('units-val').textContent=units+' unidad'+(units===1?'':'es');
+  const d=devices[curDevice],svcMult=services[curService],secMult=sectors[curSector];
+  const volDiscount=units>=100?0.85:units>=50?0.90:units>=20?0.95:1.0;
+  const hwMonthly=d.hwBase*units*volDiscount,swMonthly=d.swBase*units*secMult;
+  const mntMonthly=(hwMonthly*0.12)*svcMult,total=hwMonthly+swMonthly+mntMonthly;
+  const buyTotal=d.hwBase*48*units*0.95,waasTotal=total*48;
+  const saving=Math.max(0,buyTotal-waasTotal),savingPct=buyTotal>0?Math.round(saving/buyTotal*100):0;
+  document.getElementById('cuota-total').innerHTML=fmt(total)+'<span>/mes</span>';
+  document.getElementById('cuota-periodo').textContent='Contrato 48 meses · '+units+' × '+d.name+' · IVA no incluido';
+  document.getElementById('bd-hw').textContent=fmt(hwMonthly);
+  document.getElementById('bd-sw').textContent=fmt(swMonthly);
+  document.getElementById('bd-mnt').textContent=fmt(mntMonthly);
+  document.getElementById('bd-unit').textContent=Math.round(total/units).toLocaleString('es-ES')+' €/ud';
+  document.getElementById('bd-saving').textContent=saving>0?fmt(saving)+' ('+savingPct+'% a 4 años)':'Similar a compra directa';
+}
+updateCalc();
+</script>
+</body>
+</html>
