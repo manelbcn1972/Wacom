@@ -594,20 +594,71 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
 
 
 <script>
+var _currentSector = '';
+
 function openSectorModal(sectorName, e){
-  e.stopPropagation();
-  document.getElementById('modal-sector-title').textContent = sectorName;
-  document.getElementById('modal-sector-input').value = sectorName;
-  document.getElementById('modal-form-content').style.display = 'block';
-  document.getElementById('modal-success').style.display = 'none';
-  document.getElementById('sectorModal').classList.add('open');
+  if(e) e.stopPropagation();
+  _currentSector = sectorName;
+  document.getElementById('modal-title').textContent = sectorName;
+  document.getElementById('modal-body').style.display = 'block';
+  document.getElementById('modal-ok').style.display = 'none';
+  document.getElementById('m-nombre').value = '';
+  document.getElementById('m-email').value = '';
+  document.getElementById('m-empresa').value = '';
+  document.getElementById('m-email-err').style.display = 'none';
+  document.getElementById('m-submit').textContent = 'Enviar y recibir dossier';
+  document.getElementById('m-submit').disabled = false;
+  var modal = document.getElementById('sectorModal');
+  modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
-function closeSectorModal(e){
-  if(e.target === document.getElementById('sectorModal')){
-    document.getElementById('sectorModal').classList.remove('open');
-    document.body.style.overflow = '';
+
+function closeSector(){
+  document.getElementById('sectorModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function submitSector(){
+  var nombre = document.getElementById('m-nombre').value.trim();
+  var email = document.getElementById('m-email').value.trim();
+  var empresa = document.getElementById('m-empresa').value.trim();
+
+  if(!nombre || !email || !empresa){
+    alert('Por favor rellene todos los campos.');
+    return;
   }
+  if(!isCorporateEmail(email)){
+    document.getElementById('m-email').style.borderColor = '#D85A30';
+    document.getElementById('m-email-err').style.display = 'block';
+    return;
+  }
+  document.getElementById('m-email-err').style.display = 'none';
+  document.getElementById('m-email').style.borderColor = 'rgba(0,0,0,0.20)';
+
+  var btn = document.getElementById('m-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  var body = 'form-name=' + encodeURIComponent('solicitud-sector')
+    + '&sector=' + encodeURIComponent(_currentSector)
+    + '&nombre=' + encodeURIComponent(nombre)
+    + '&email=' + encodeURIComponent(email)
+    + '&empresa=' + encodeURIComponent(empresa);
+
+  fetch('/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: body
+  })
+  .then(function(){ showSectorOK(); })
+  .catch(function(){ showSectorOK(); });
+}
+
+function showSectorOK(){
+  document.getElementById('modal-ok-sector').textContent = _currentSector;
+  document.getElementById('modal-body').style.display = 'none';
+  document.getElementById('modal-ok').style.display = 'block';
+  setTimeout(closeSector, 3500);
 }
 // Blocked personal email domains
 var PERSONAL_DOMAINS = ['gmail.com','hotmail.com','hotmail.es','outlook.com','outlook.es',
@@ -689,8 +740,7 @@ function handleModalSubmit(e){
 // Close with ESC key
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
-    document.getElementById('sectorModal').classList.remove('open');
-    document.body.style.overflow = '';
+    closeSector();
   }
 });
 </script>
@@ -745,5 +795,44 @@ document.querySelectorAll('.nav-links a').forEach(function(a){
   });
 });
 </script>
+
+<!-- SECTOR MODAL -->
+<div id="sectorModal" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.55);z-index:9999;align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this){closeSector()}">
+  <div style="background:#fff;border-radius:4px;width:100%;max-width:460px;padding:36px;position:relative;animation:modalIn .2s ease;">
+    <button onclick="closeSector()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#6B6B6B;line-height:1;">×</button>
+    <div id="modal-body">
+      <p style="font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#4A8FA8;margin-bottom:8px;">Solución sectorial</p>
+      <h2 id="modal-title" style="font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:#0A0A0A;margin-bottom:8px;line-height:1.2;"></h2>
+      <p style="font-size:13px;color:#6B6B6B;line-height:1.6;margin-bottom:22px;">Déjenos sus datos y le enviamos el dossier completo con casos de uso, productos recomendados y propuesta adaptada a su sector.</p>
+      <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px;">
+        <label style="font-size:11px;font-weight:500;color:#6B6B6B;letter-spacing:0.06em;text-transform:uppercase;">Nombre</label>
+        <input id="m-nombre" type="text" placeholder="Su nombre" required style="border:0.5px solid rgba(0,0,0,0.20);border-radius:2px;padding:10px 12px;font-size:13px;font-family:inherit;outline:none;" onfocus="this.style.borderColor='#4A8FA8'" onblur="this.style.borderColor='rgba(0,0,0,0.20)'"/>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px;">
+        <label style="font-size:11px;font-weight:500;color:#6B6B6B;letter-spacing:0.06em;text-transform:uppercase;">Email corporativo</label>
+        <input id="m-email" type="email" placeholder="nombre@empresa.com" required style="border:0.5px solid rgba(0,0,0,0.20);border-radius:2px;padding:10px 12px;font-size:13px;font-family:inherit;outline:none;" onfocus="this.style.borderColor='#4A8FA8'" onblur="this.style.borderColor='rgba(0,0,0,0.20)'"/>
+        <p id="m-email-err" style="display:none;font-size:11px;color:#D85A30;margin-top:2px;">Use un email corporativo. No se aceptan Gmail, Hotmail, etc.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:20px;">
+        <label style="font-size:11px;font-weight:500;color:#6B6B6B;letter-spacing:0.06em;text-transform:uppercase;">Empresa</label>
+        <input id="m-empresa" type="text" placeholder="Nombre de su empresa" required style="border:0.5px solid rgba(0,0,0,0.20);border-radius:2px;padding:10px 12px;font-size:13px;font-family:inherit;outline:none;" onfocus="this.style.borderColor='#4A8FA8'" onblur="this.style.borderColor='rgba(0,0,0,0.20)'"/>
+      </div>
+      <button id="m-submit" onclick="submitSector()" style="width:100%;background:#17233A;color:#fff;padding:12px;border-radius:2px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:inherit;">Enviar y recibir dossier</button>
+      <p style="font-size:11px;color:#6B6B6B;text-align:center;margin-top:10px;line-height:1.5;">Le enviaremos el dossier en menos de 24h. Datos tratados conforme al RGPD.</p>
+    </div>
+    <div id="modal-ok" style="display:none;text-align:center;padding:20px 0;">
+      <div style="width:52px;height:52px;border-radius:50%;background:rgba(74,143,168,0.10);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M5 13 L11 19 L21 8" stroke="#4A8FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;color:#0A0A0A;margin-bottom:8px;">Solicitud recibida</h3>
+      <p style="font-size:13px;color:#6B6B6B;line-height:1.6;">Le enviaremos el dossier de <strong id="modal-ok-sector"></strong> en menos de 24 horas a su email corporativo.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes modalIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
 </body>
 </html>
