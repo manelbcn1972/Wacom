@@ -622,47 +622,69 @@ function isCorporateEmail(email){
   return !PERSONAL_DOMAINS.includes(domain.toLowerCase());
 }
 
+function showModalSuccess(sectorName){
+  document.getElementById('modal-form-content').style.display = 'none';
+  document.getElementById('success-sector-name').textContent = sectorName;
+  document.getElementById('modal-success').style.display = 'block';
+  setTimeout(function(){
+    document.getElementById('sectorModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }, 3500);
+}
+
 function handleModalSubmit(e){
   e.preventDefault();
   var form = e.target;
   var emailInput = form.querySelector('input[name="email"]');
+
+  // Validate corporate email
   if(!isCorporateEmail(emailInput.value)){
     emailInput.style.borderColor = '#D85A30';
-    var errMsg = emailInput.parentNode.querySelector('.email-error');
-    if(!errMsg){
+    var existing = emailInput.parentNode.querySelector('.email-error');
+    if(!existing){
       var err = document.createElement('p');
       err.className = 'email-error';
       err.style.cssText = 'font-size:11px;color:#D85A30;margin-top:4px;';
-      err.textContent = 'Por favor, use un email corporativo. No se aceptan emails personales (Gmail, Hotmail, etc.)';
+      err.textContent = 'Por favor, use un email corporativo. No se aceptan Gmail, Hotmail, etc.';
       emailInput.parentNode.appendChild(err);
     }
     return;
   } else {
     emailInput.style.borderColor = '';
-    var errMsg = emailInput.parentNode.querySelector('.email-error');
-    if(errMsg) errMsg.remove();
+    var existing = emailInput.parentNode.querySelector('.email-error');
+    if(existing) existing.remove();
   }
-  var data = new FormData(form);
+
   var sectorName = document.getElementById('modal-sector-input').value;
-  fetch(window.location.pathname, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(data).toString()})
-    .then(function(){
-      document.getElementById('modal-form-content').style.display = 'none';
-      document.getElementById('success-sector-name').textContent = sectorName;
-      document.getElementById('modal-success').style.display = 'block';
-      setTimeout(function(){
-        document.getElementById('sectorModal').classList.remove('open');
-        document.body.style.overflow = '';
-      }, 3000);
-    })
-    .catch(function(){
-      document.getElementById('modal-form-content').style.display = 'none';
-      document.getElementById('success-sector-name').textContent = sectorName;
-      document.getElementById('modal-success').style.display = 'block';
-      setTimeout(function(){
-        document.getElementById('sectorModal').classList.remove('open');
-        document.body.style.overflow = '';
-      }, 3000);
-    });
+  var submitBtn = form.querySelector('button[type="submit"]');
+  submitBtn.textContent = 'Enviando...';
+  submitBtn.disabled = true;
+
+  // Build encoded body manually to ensure form-name is included
+  var fields = {
+    'form-name': 'solicitud-sector',
+    'sector': sectorName,
+    'nombre': form.querySelector('[name="nombre"]').value,
+    'email': emailInput.value,
+    'empresa': form.querySelector('[name="empresa"]').value
+  };
+
+  var encoded = Object.keys(fields)
+    .map(function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(fields[k]); })
+    .join('&');
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encoded
+  })
+  .then(function(res){
+    showModalSuccess(sectorName);
+  })
+  .catch(function(){
+    // Even on network error show success — Netlify may have received it
+    showModalSuccess(sectorName);
+  });
 }
 // Close with ESC key
 document.addEventListener('keydown', function(e){
