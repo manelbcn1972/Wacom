@@ -298,22 +298,6 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
         <input type="range" min="1" max="200" value="10" step="1" id="units-slider" oninput="updateCalc()"/>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-top:6px;"><span>1</span><span>50</span><span>100</span><span>200</span></div>
       </div>
-      <div class="calc-row">
-        <div class="calc-label"><span>Service level</span></div>
-        <div class="opts" id="service-opts">
-          <button class="opt" data-val="base" onclick="setService(this)">Base</button>
-          <button class="opt active" data-val="standard" onclick="setService(this)">Standard</button>
-          <button class="opt" data-val="premium" onclick="setService(this)">Premium</button>
-        </div>
-      </div>
-      <div class="calc-row">
-        <div class="calc-label"><span>Industry</span></div>
-        <div class="opts" id="sector-opts">
-          <button class="opt active" data-val="corp" onclick="setSector(this)">Corporativo</button>
-          <button class="opt" data-val="health" onclick="setSector(this)">Healthcare</button>
-          <button class="opt" data-val="cad" onclick="setSector(this)">CAD / Diseño</button>
-        </div>
-      </div>
       <div style="background:rgba(74,143,168,0.07);border:0.5px solid rgba(74,143,168,0.18);border-radius:3px;padding:14px 16px;margin-top:8px;">
         <p style="font-size:12px;color:var(--gray);line-height:1.6;">Indicative estimate from CONTECNOW. Binding price issued on formal request. VAT not included.</p>
       </div>
@@ -473,20 +457,16 @@ const devices={
   dth134:{name:'Signature Display 13',hwBase:Math.round(588.23/48*1.25),swBase:10},
   dtk1660:{name:'DTK-1660E 15.6"',hwBase:Math.round(840.33/48*1.25),swBase:14}
 };
-const services={base:1.0,standard:1.18,premium:1.38};
-const sectors={corp:1.0,health:1.10,cad:1.08};
-let curDevice='stu430',curService='standard',curSector='corp';
+let curDevice='stu430';
 function fmt(n){return Math.round(n).toLocaleString('es-ES')+' €';}
 function setDevice(el){document.querySelectorAll('#device-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curDevice=el.dataset.val;updateCalc();}
-function setService(el){document.querySelectorAll('#service-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curService=el.dataset.val;updateCalc();}
-function setSector(el){document.querySelectorAll('#sector-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curSector=el.dataset.val;updateCalc();}
 function updateCalc(){
   const units=parseInt(document.getElementById('units-slider').value);
   document.getElementById('units-val').textContent=units+' unit'+(units===1?'':'es');
-  const d=devices[curDevice],svcMult=services[curService],secMult=sectors[curSector];
+  const d=devices[curDevice];
   const volDiscount=units>=100?0.85:units>=50?0.90:units>=20?0.95:1.0;
-  const hwMonthly=d.hwBase*units*volDiscount,swMonthly=d.swBase*units*secMult;
-  const mntMonthly=(hwMonthly*0.12)*svcMult,total=hwMonthly+swMonthly+mntMonthly;
+  const hwMonthly=d.hwBase*units*volDiscount,swMonthly=d.swBase*units;
+  const mntMonthly=hwMonthly*0.12,total=hwMonthly+swMonthly+mntMonthly;
   const buyTotal=d.hwBase*48*units*0.95,waasTotal=total*48;
   const saving=Math.max(0,buyTotal-waasTotal),savingPct=buyTotal>0?Math.round(saving/buyTotal*100):0;
   document.getElementById('cuota-total').innerHTML=fmt(total)+'<span>/mes</span>';
