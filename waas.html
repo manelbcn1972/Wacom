@@ -286,10 +286,11 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
       <div class="calc-row">
         <div class="calc-label"><span>Tipo de dispositivo principal</span></div>
         <div class="opts" id="device-opts">
-          <button class="opt active" data-val="stu300" onclick="setDevice(this)">STU-300/430</button>
+          <button class="opt active" data-val="stu430" onclick="setDevice(this)">STU-430</button>
           <button class="opt" data-val="stu540" onclick="setDevice(this)">STU-540</button>
-          <button class="opt" data-val="dtu1141" onclick="setDevice(this)">DTU-1141B</button>
-          <button class="opt" data-val="dtk2451" onclick="setDevice(this)">DTK-2451</button>
+          <button class="opt" data-val="dtc121" onclick="setDevice(this)">Sign. Display 12</button>
+          <button class="opt" data-val="dth134" onclick="setDevice(this)">Sign. Display 13</button>
+          <button class="opt" data-val="dtk1660" onclick="setDevice(this)">DTK-1660E</button>
         </div>
       </div>
       <div class="calc-row">
@@ -387,7 +388,7 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
         </div>
         <div class="frow">
           <div class="field"><label>Dispositivos estimados</label><select name="dispositivos"><option>1 – 10 dispositivos</option><option>11 – 50 dispositivos</option><option>51 – 200 dispositivos</option><option>200+ dispositivos</option></select></div>
-          <div class="field"><label>Modelo de interés</label><select name="modelo"><option>STU-300 (pad firma básico)</option><option>STU-430 (pad firma mediano)</option><option>STU-540 (pad firma color 5")</option><option>DTK-1660E (pantalla 15.6")</option><option>DTK-2451 (pantalla 24")</option><option>sign pro PDF (software)</option><option>Wacom Ink SDK (integración)</option><option>Mix de productos</option><option>No lo sé, necesito asesoramiento</option></select></div>
+          <div class="field"><label>Modelo de interés</label><select name="modelo"><option>STU-300 (pad firma básico)</option><option>STU-430 (pad firma mediano)</option><option>STU-540 (pad firma color 5")</option><option>STU-430 (pad firma monocromo)</option><option>DTK-2451 (pantalla 24")</option><option>sign pro PDF (software)</option><option>Wacom Ink SDK (integración)</option><option>Mix de productos</option><option>No lo sé, necesito asesoramiento</option></select></div>
         </div>
         <div class="frow-full"><div class="field"><label>¿Qué proceso quiere digitalizar?</label><textarea name="proceso" placeholder="Ej: firma de contratos en 20 oficinas, consentimientos informados en clínica..."></textarea></div></div>
         <button type="submit" class="form-submit">Solicitar oferta WaaS a CONTECNOW</button>
@@ -466,14 +467,15 @@ document.querySelectorAll('form[data-netlify]').forEach(function(form){
 });
 
 const devices={
-  stu300:{name:'STU-300/430',hwBase:10,swBase:3},
-  stu540:{name:'STU-540',hwBase:18,swBase:4},
-  dtu1141:{name:'DTU-1141B',hwBase:35,swBase:6},
-  dtk2451:{name:'DTK-2451',hwBase:80,swBase:12}
+  stu430:{name:'STU-430',hwBase:Math.round(176.39/48*1.25),swBase:4},
+  stu540:{name:'STU-540',hwBase:Math.round(260.42/48*1.25),swBase:5},
+  dtc121:{name:'Signature Display 12',hwBase:Math.round(420.16/48*1.25),swBase:8},
+  dth134:{name:'Signature Display 13',hwBase:Math.round(588.23/48*1.25),swBase:10},
+  dtk1660:{name:'DTK-1660E 15.6"',hwBase:Math.round(840.33/48*1.25),swBase:14}
 };
 const services={base:1.0,standard:1.18,premium:1.38};
 const sectors={corp:1.0,health:1.10,cad:1.08};
-let curDevice='stu300',curService='standard',curSector='corp';
+let curDevice='stu430',curService='standard',curSector='corp';
 function fmt(n){return Math.round(n).toLocaleString('es-ES')+' €';}
 function setDevice(el){document.querySelectorAll('#device-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curDevice=el.dataset.val;updateCalc();}
 function setService(el){document.querySelectorAll('#service-opts .opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');curService=el.dataset.val;updateCalc();}
