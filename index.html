@@ -233,6 +233,13 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
 .modal-success h3{font-family:var(--fd);font-size:20px;font-weight:400;color:var(--black);margin-bottom:8px;}
 .modal-success p{font-size:13px;color:var(--gray);line-height:1.6;}
 
+
+.lang-switcher{display:flex;align-items:center;gap:4px;margin-left:8px;}
+.lang-btn{font-size:12px;font-weight:500;color:var(--gray);text-decoration:none;padding:4px 8px;border-radius:2px;border:0.5px solid transparent;transition:all .2s;letter-spacing:0.04em;}
+.lang-btn:hover{color:var(--black);border-color:var(--border);}
+.lang-btn.active{color:var(--black);border-color:var(--border);background:var(--light);}
+.lang-divider-sm{width:0.5px;height:12px;background:var(--border);}
+
 </style>
 </head>
 <body>
@@ -258,6 +265,11 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
     <li><a href="#testimoniales">Casos de éxito</a></li>
     <li><a href="#contacto" class="nav-cta">Contactar</a></li>
   </ul>
+  <div class="lang-switcher">
+    <a href="/index.html" class="lang-btn active">ES</a>
+    <div class="lang-divider-sm"></div>
+    <a href="/en/index.html" class="lang-btn">EN</a>
+  </div>
 </nav>
 
 <section class="wc-hero">
