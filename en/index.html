@@ -17,12 +17,13 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
 .nav-partner{display:flex;flex-direction:column;gap:4px;}
 .nav-partner-label{font-size:9px;color:var(--gray);letter-spacing:0.10em;text-transform:uppercase;}
 .nav-partner img.logo-wacom{height:18px;width:auto;opacity:0.65;}
-.nav-links{display:flex;gap:28px;list-style:none;align-items:center;}
-.nav-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color .2s;}
+.nav-links{display:flex;gap:14px;list-style:none;align-items:center;flex-wrap:nowrap;}
+.nav-links a{font-size:12.5px;color:var(--gray);text-decoration:none;transition:color .2s;white-space:nowrap;}
 .nav-links a:hover,.nav-links a.active{color:var(--black);}
 .nav-links a.active{font-weight:500;}
-.nav-waas{background:var(--accent2);color:var(--white)!important;padding:7px 16px;border-radius:2px;font-size:13px!important;font-weight:500!important;}
-.nav-cta{background:var(--black);color:var(--white)!important;padding:7px 16px;border-radius:2px;font-size:13px!important;font-weight:500!important;}
+.nav-waas{background:var(--accent2);color:var(--white)!important;padding:6px 12px;border-radius:2px;font-size:12px!important;font-weight:500!important;}
+.nav-cta{background:var(--black);color:var(--white)!important;padding:6px 12px;border-radius:2px;font-size:12px!important;font-weight:500!important;}
+.nav-creative{background:#7C3AED;color:var(--white)!important;padding:7px 16px;border-radius:2px;font-size:13px!important;font-weight:500!important;}
 .lang-switcher{display:flex;align-items:center;gap:4px;margin-left:8px;}
 .lang-btn{font-size:12px;font-weight:500;color:var(--gray);text-decoration:none;padding:4px 8px;border-radius:2px;border:0.5px solid transparent;transition:all .2s;letter-spacing:0.04em;}
 .lang-btn:hover{color:var(--black);border-color:var(--border);}
@@ -154,7 +155,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
     <img class="logo-contec" src="../assets/contecnow-logo.png" alt="CONTECNOW"/>
     <div class="nav-divider"></div>
     <div class="nav-partner">
-      <span class="nav-partner-label">Official Partner</span>
+      <span class="nav-partner-label">Sub-wholesaler</span>
       <img class="logo-wacom" src="../assets/wacom-logo.gif" alt="Wacom"/>
     </div>
   </div>
@@ -166,14 +167,15 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
     <li><a href="#sectors">Industries</a></li>
     <li><a href="#products">Products</a></li>
     <li><a href="#special-pricing">Pricing</a></li>
-    <li><a href="waas.html" class="nav-waas">WaaS</a></li>
+    <li><a href='/en/waas'>WaaS Signature</a></li>
+    <li><a class='nav-creative' href='/en/waas-creative'>WaaS Creative</a></li>
     <li><a href="#testimonials">Case Studies</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
   <div class="lang-switcher">
-    <a href="/index.html" class="lang-btn">ES</a>
+    <a class='lang-btn' href='/'>ES</a>
     <div class="lang-divider-sm"></div>
-    <a href="/en/index.html" class="lang-btn active">EN</a>
+    <a class='lang-btn active' href='/en/'>EN</a>
   </div>
 </nav>
 
@@ -182,7 +184,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
   <div>
     <p class="wc-hero-eyebrow">Wacom Technology for Enterprise</p>
     <h1>Sign, create<br>and decide <em>paperless.</em></h1>
-    <p class="wc-hero-desc">Electronic signature, data capture and digital workflow solutions for organisations that demand precision, security and scalability. Official Wacom partner for Spain.</p>
+    <p class="wc-hero-desc">Electronic signature, data capture and digital workflow solutions for organisations that demand precision, security and scalability. Wacom distributor and sub-wholesaler for Spain.</p>
     <div class="wc-hero-actions">
       <a href="#contact" class="btn-primary">Request a demo</a>
       <a href="#products" class="btn-ghost">View catalogue</a>
@@ -279,7 +281,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
           <div style="text-align:center;"><p style="font-size:13px;font-weight:500;color:var(--dark);">50+</p><p style="font-size:10px;color:var(--accent2);">Negotiable</p></div>
         </div>
       </div>
-      <form name="volume-pricing-en" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/en/thanks.html">
+      <form action='/en/thanks' method='POST' name='volume-pricing-en'>
         <input type="hidden" name="form-name" value="volume-pricing-en"/>
         <p style="display:none;"><input name="bot-field"/></p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
@@ -312,7 +314,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
           <li style="font-size:12px;color:var(--gray);padding:4px 0;display:flex;gap:8px;align-items:center;"><span style="width:5px;height:5px;border-radius:50%;background:var(--dark);flex-shrink:0;display:inline-block;"></span>Dedicated pre and post-sales technical support</li>
         </ul>
       </div>
-      <form name="reseller-programme-en" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/en/thanks.html">
+      <form action='/en/thanks' method='POST' name='reseller-programme-en'>
         <input type="hidden" name="form-name" value="reseller-programme-en"/>
         <p style="display:none;"><input name="bot-field"/></p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
@@ -341,7 +343,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
     <div>
       <span class="section-tag">Why CONTECNOW</span>
       <h2 class="section-title">Precision that<br><em>transforms processes</em></h2>
-      <p class="section-sub">Not just hardware. We are the Wacom partner that integrates, trains and supports complex organisations across Spain and Europe.</p>
+      <p class="section-sub">Not just hardware. We are the Wacom distributor and sub-wholesaler that integrates, trains and supports complex organisations across Spain and Europe.</p>
       <ul class="wc-features-list">
         <li class="wc-feature-item"><span class="wc-feature-num">01</span><div class="wc-feature-body"><h4>Integration with your current stack</h4><p>Native SDK compatible with SAP, Salesforce, DocuSign, Epic and proprietary systems via REST API. No rewriting existing processes.</p></div></li>
         <li class="wc-feature-item"><span class="wc-feature-num">02</span><div class="wc-feature-body"><h4>Certified regulatory compliance</h4><p>Electronic signature compliant with eIDAS advanced and qualified levels. GDPR, HIPAA and SOC 2 Type II. Fully auditable with complete chain of custody.</p></div></li>
@@ -358,7 +360,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
         <li>Fixed price. No surprises.</li>
         <li>Guaranteed replacement in under 24h</li>
       </ul>
-      <a href="waas.html" class="btn-light">Learn about WaaS →</a>
+      <a class='btn-light' href='/en/waas'>Learn about WaaS →</a>
     </div>
   </div>
 </section>
@@ -392,7 +394,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
   </div>
   <div class="wc-form-card">
     <p class="wc-form-title">Request a free demo</p>
-    <form name="demo-contecnow-en" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/en/thanks.html">
+    <form action='/en/thanks' method='POST' name='demo-contecnow-en'>
       <input type="hidden" name="form-name" value="demo-contecnow-en"/>
       <p style="display:none;"><input name="bot-field"/></p>
       <div class="wc-form-row">
@@ -418,11 +420,11 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
   <div class="footer-grid">
     <div class="footer-brand">
       <img src="../assets/contecnow-logo.png" alt="CONTECNOW"/>
-      <span class="footer-brand-sub">Official Wacom Partner · Spain</span>
-      <p class="footer-brand-desc">Authorised Wacom distributor and partner for enterprises in Spain. Electronic signature solutions, professional hardware and WaaS programme.</p>
-      <div class="footer-wacom-tag"><img src="../assets/wacom-logo.gif" alt="Wacom"/><span>Authorized Business Partner</span></div>
+      <span class="footer-brand-sub">Wacom Distributor and Sub-wholesaler · Spain</span>
+      <p class="footer-brand-desc">Authorised Wacom distributor and sub-wholesaler for enterprises in Spain. Electronic signature solutions, professional hardware and WaaS programme.</p>
+      <div class="footer-wacom-tag"><img src="../assets/wacom-logo.gif" alt="Wacom"/><span>Distributor and sub-wholesaler</span></div>
     </div>
-    <div class="footer-col"><h5>Solutions</h5><ul><li><a href="#">Electronic signature</a></li><li><a href="#">Data capture</a></li><li><a href="#">SDK integration</a></li><li><a href="waas.html">WaaS · Renting</a></li></ul></div>
+    <div class="footer-col"><h5>Solutions</h5><ul><li><a href="#">Electronic signature</a></li><li><a href="#">Data capture</a></li><li><a href="#">SDK integration</a></li><li><a href='/en/waas'>WaaS · Renting</a></li></ul></div>
     <div class="footer-col"><h5>Industries</h5><ul><li><a href="#">Finance &amp; Banking</a></li><li><a href="#">Healthcare</a></li><li><a href="#">Architecture &amp; CAD</a></li><li><a href="#">Legal &amp; Compliance</a></li></ul></div>
     <div class="footer-col"><h5>CONTECNOW</h5><ul><li><a href="#">About us</a></li><li><a href="#">Other brands</a></li><li><a href="#">Technical support</a></li><li><a href="#">Legal notice</a></li><li><a href="#">Privacy policy</a></li></ul></div>
   </div>
@@ -432,7 +434,7 @@ body{font-family:var(--fb);color:var(--black);background:var(--white);}
   </div>
 </footer>
 <div class="footer-disclaimer">
-  <p>The trademarks Wacom®, Cintiq®, Intuos® and STU® are the exclusive property of Wacom Co., Ltd. CONTECNOW acts as an authorised independent distributor and partner and is not part of the Wacom group. Prices shown are indicative and do not constitute a binding offer. All prices exclude VAT.</p>
+  <p>The trademarks Wacom®, Cintiq®, Intuos® and STU® are the exclusive property of Wacom Co., Ltd. CONTECNOW acts as an authorised independent distributor and sub-wholesaler and is not part of the Wacom group. Prices shown are indicative and do not constitute a binding offer. All prices exclude VAT.</p>
 </div>
 
 </div>

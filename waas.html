@@ -10,19 +10,20 @@
 :root{--black:#0A0A0A;--dark:#17233A;--gray:#6B6B6B;--light:#F4F3F0;--white:#FFFFFF;--accent:#1A3A5C;--accent2:#4A8FA8;--border:rgba(0,0,0,0.10);--fd:'DM Serif Display',serif;--fb:'DM Sans',sans-serif;}
 body{font-family:var(--fb);color:var(--black);background:var(--white);}
 .site{max-width:1100px;margin:0 auto;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:0.5px solid var(--border);background:var(--white);position:sticky;top:0;z-index:100;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:0.5px solid var(--border);background:var(--white);position:sticky;top:0;z-index:100;}
 .nav-logo{display:flex;align-items:center;gap:16px;}
 .nav-logo img.logo-contec{height:44px;width:auto;}
 .nav-divider{width:0.5px;height:32px;background:rgba(0,0,0,0.15);}
 .nav-partner{display:flex;flex-direction:column;gap:4px;}
 .nav-partner-label{font-size:9px;color:var(--gray);letter-spacing:0.10em;text-transform:uppercase;}
 .nav-partner img.logo-wacom{height:18px;width:auto;opacity:0.65;}
-.nav-links{display:flex;gap:28px;list-style:none;align-items:center;}
-.nav-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color .2s;}
+.nav-links{display:flex;gap:14px;list-style:none;align-items:center;flex-wrap:nowrap;}
+.nav-links a{font-size:12.5px;color:var(--gray);text-decoration:none;transition:color .2s;white-space:nowrap;}
 .nav-links a:hover,.nav-links a.active{color:var(--black);}
 .nav-links a.active{font-weight:500;}
-.nav-waas{background:var(--accent2);color:var(--white)!important;padding:7px 16px;border-radius:2px;font-size:13px!important;font-weight:500!important;}
-.nav-cta{background:var(--black);color:var(--white)!important;padding:7px 16px;border-radius:2px;font-size:13px!important;font-weight:500!important;}
+.nav-waas{background:var(--accent2);color:var(--white)!important;padding:6px 12px;border-radius:2px;font-size:12px!important;font-weight:500!important;}
+.nav-cta{background:var(--black);color:var(--white)!important;padding:6px 12px;border-radius:2px;font-size:12px!important;font-weight:500!important;}
+.nav-creative{background:#7C3AED;color:var(--white)!important;padding:6px 12px;border-radius:2px;font-size:12px!important;font-weight:500!important;}
 .waas-hero{padding:72px 40px 64px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;border-bottom:0.5px solid var(--border);background:var(--dark);}
 .waas-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;}
 .waas-hero h1{font-family:var(--fd);font-size:48px;line-height:1.10;font-weight:400;color:var(--white);margin-bottom:20px;}
@@ -160,6 +161,7 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
   .nav-links a{display:block;padding:12px 20px;font-size:14px;color:var(--black);border-bottom:0.5px solid var(--border);}
   .nav-links li:last-child a{border-bottom:none;}
   .nav-waas{border-radius:0!important;padding:12px 20px!important;}
+  .nav-creative{border-radius:0!important;padding:12px 20px!important;background:#5B21B6!important;}
   .nav-cta{border-radius:0!important;padding:12px 20px!important;}
   .waas-hero{grid-template-columns:1fr;padding:36px 16px 32px;gap:24px;}
   .waas-hero h1{font-size:30px;}
@@ -207,7 +209,7 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
     <img class="logo-contec" src="assets/contecnow-logo.png" alt="CONTECNOW"/>
     <div class="nav-divider"></div>
     <div class="nav-partner">
-      <span class="nav-partner-label">Partner oficial</span>
+      <span class="nav-partner-label">Submayorista</span>
       <img class="logo-wacom" src="assets/wacom-logo.gif" alt="Wacom"/>
     </div>
   </div>
@@ -215,17 +217,17 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links" id="nav-links">
-    <li><a href="index.html">Soluciones</a></li>
-    <li><a href="index.html#sectores">Sectores</a></li>
-    <li><a href="index.html#productos">Productos</a></li>
-    <li><a href="waas.html" class="nav-waas active">WaaS</a></li>
-    <li><a href="index.html#testimoniales">Casos de éxito</a></li>
-    <li><a href="index.html#contacto" class="nav-cta">Contactar</a></li>
+    <li><a href='/'>Soluciones</a></li>
+    <li><a href='/#sectores'>Sectores</a></li>
+    <li><a href='/#productos'>Productos</a></li>
+    <li><a class='nav-waas active' href='/waas'>WaaS Firma</a></li>
+    <li><a class='nav-creative' href='/waas-creative'>WaaS Creative</a></li>
+    <li><a class='nav-cta' href='/#contacto'>Contactar</a></li>
   </ul>
   <div class="lang-switcher">
-    <a href="/index.html" class="lang-btn">ES</a>
+    <a class='lang-btn' href='/'>ES</a>
     <div class="lang-divider-sm"></div>
-    <a href="/en/waas.html" class="lang-btn active">EN</a>
+    <a class='lang-btn active' href='/en/waas'>EN</a>
   </div>
 </nav>
 
@@ -233,7 +235,7 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
   <div>
     <p class="waas-eyebrow">Wacom as a Service · WaaS</p>
     <h1>Todo Wacom.<br><em>Sin inversión</em><br>inicial.</h1>
-    <p class="waas-hero-desc">Hardware certificado, licencias y mantenimiento en una única cuota mensual predecible. Contrato 4 años. Gestionado por CONTECNOW, partner oficial Wacom.</p>
+    <p class="waas-hero-desc">Hardware certificado, licencias y mantenimiento en una única cuota mensual predecible. Contrato 4 años. Gestionado por CONTECNOW, distribuidor y submayorista de Wacom.</p>
     <div class="pills">
       <span class="pill pill-accent">100% OPEX</span>
       <span class="pill">Hardware incluido</span>
@@ -247,7 +249,7 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
     </div>
     <div class="partner-badge">
       <img src="assets/wacom-logo.gif" alt="Wacom"/>
-      <p><strong>CONTECNOW</strong> es distribuidor y partner oficial de Wacom para empresas en España. Ofrecemos WaaS con respaldo técnico y comercial propio.</p>
+      <p><strong>CONTECNOW</strong> es distribuidor y submayorista de Wacom para empresas en España. Ofrecemos WaaS con respaldo técnico y comercial propio.</p>
     </div>
   </div>
   <div class="waas-visual">
@@ -355,7 +357,7 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
     </div>
     <div class="form-card">
       <span class="form-tag">Oferta WaaS gratuita · CONTECNOW</span>
-      <form name="waas-contecnow" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gracias.html">
+      <form action='/gracias' method='POST' name='waas-contecnow'>
         <input type="hidden" name="form-name" value="waas-contecnow"/>
         <p style="display:none;"><label>No rellenar: <input name="bot-field"/></label></p>
         <div class="frow">
@@ -386,12 +388,12 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
   <div class="footer-grid">
     <div class="footer-brand">
       <img class="logo-footer" src="assets/contecnow-logo.png" alt="CONTECNOW"/>
-      <span class="footer-brand-sub">Partner oficial Wacom · España</span>
-      <p class="footer-brand-desc">Distribuidor y partner oficial de Wacom para empresas en España. Soluciones de firma electrónica, hardware profesional y programa WaaS.</p>
-      <div class="footer-wacom-tag"><img src="assets/wacom-logo.gif" alt="Wacom"/><span>Authorized Business Partner</span></div>
+      <span class="footer-brand-sub">Distribuidor y submayorista Wacom · España</span>
+      <p class="footer-brand-desc">Distribuidor y submayorista de Wacom para empresas en España. Soluciones de firma electrónica, hardware profesional y programa WaaS.</p>
+      <div class="footer-wacom-tag"><img src="assets/wacom-logo.gif" alt="Wacom"/><span>Distribuidor y submayorista</span></div>
     </div>
-    <div class="footer-col"><h5>Soluciones</h5><ul><li><a href="index.html">Firma electrónica</a></li><li><a href="index.html">Captura de datos</a></li><li><a href="index.html">Integración SDK</a></li><li><a href="waas.html">WaaS · Renting</a></li></ul></div>
-    <div class="footer-col"><h5>Sectores</h5><ul><li><a href="index.html#sectores">Banca y Finanzas</a></li><li><a href="index.html#sectores">Salud</a></li><li><a href="index.html#sectores">Arquitectura y CAD</a></li><li><a href="index.html#sectores">Legal y Compliance</a></li></ul></div>
+    <div class="footer-col"><h5>Soluciones</h5><ul><li><a href='/'>Firma electrónica</a></li><li><a href='/'>Captura de datos</a></li><li><a href='/'>Integración SDK</a></li><li><a href='/waas'>WaaS · Renting</a></li></ul></div>
+    <div class="footer-col"><h5>Sectores</h5><ul><li><a href='/#sectores'>Banca y Finanzas</a></li><li><a href='/#sectores'>Salud</a></li><li><a href='/#sectores'>Arquitectura y CAD</a></li><li><a href='/#sectores'>Legal y Compliance</a></li></ul></div>
     <div class="footer-col"><h5>CONTECNOW</h5><ul><li><a href="#">Quiénes somos</a></li><li><a href="#">Otros fabricantes</a></li><li><a href="#">Soporte técnico</a></li><li><a href="#">Aviso legal</a></li><li><a href="#">Política de privacidad</a></li></ul></div>
   </div>
   <div class="footer-bottom">
@@ -400,7 +402,7 @@ input[type=range]{width:100%;accent-color:var(--accent2);height:4px;border-radiu
   </div>
 </footer>
 <div class="footer-disclaimer">
-  <p>Las marcas Wacom®, Cintiq®, Intuos® y STU® son propiedad exclusiva de Wacom Co., Ltd. CONTECNOW actúa como distribuidor y partner autorizado independiente y no forma parte del grupo Wacom. Las estimaciones de la calculadora son orientativas y no constituyen oferta vinculante. IVA no incluido.</p>
+  <p>Las marcas Wacom®, Cintiq®, Intuos® y STU® son propiedad exclusiva de Wacom Co., Ltd. CONTECNOW actúa como distribuidor y submayorista autorizado independiente y no forma parte del grupo Wacom. Las estimaciones de la calculadora son orientativas y no constituyen oferta vinculante. IVA no incluido.</p>
 </div>
 </div>
 

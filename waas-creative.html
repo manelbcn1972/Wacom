@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="es" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONTECNOW · WaaS Creative — Wacom para Profesionales Creativos</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#0A0A0A;--dark:#17233A;--gray:#6B6B6B;--light:#F4F3F0;--white:#FFFFFF;
+  --accent2:#4A8FA8;--border:rgba(0,0,0,0.10);
+  --creative:#7C3AED;--creative2:#A78BFA;
+  --bridge:#059669;--bridge2:#34D399;
+  --fd:'DM Serif Display',serif;--fb:'DM Sans',sans-serif;
+}
+body{font-family:var(--fb);color:var(--black);background:var(--white);}
+
+/* ── LAYOUT ── */
+.page-wrap{max-width:1100px;margin:0 auto;}
+
+/* ── LANG BAR ── */
+.lang-bar{background:var(--dark);width:100%;}
+.lang-bar-inner{max-width:1100px;margin:0 auto;padding:7px 40px;display:flex;justify-content:flex-end;gap:8px;align-items:center;}
+.lang-btn{font-size:11px;font-weight:600;letter-spacing:0.10em;padding:4px 12px;border-radius:2px;border:none;cursor:pointer;font-family:var(--fb);transition:all .18s;}
+.lang-btn.active{background:var(--creative);color:#fff;}
+.lang-btn:not(.active){background:rgba(255,255,255,0.10);color:rgba(255,255,255,0.5);}
+.lang-btn:not(.active):hover{background:rgba(255,255,255,0.18);color:#fff;}
+.lang-sep{color:rgba(255,255,255,0.2);font-size:11px;}
+
+/* ── i18n: use visibility trick instead of display to avoid block/inline issues ── */
+[data-en]{display:none;}
+[data-es]{display:block;}
+/* inline elements need inline */
+span[data-en],a[data-en],strong[data-en],em[data-en]{display:none;}
+span[data-es],a[data-es],strong[data-es],em[data-es]{display:inline;}
+body.lang-en [data-en]{display:block;}
+body.lang-en [data-es]{display:none;}
+body.lang-en span[data-en],body.lang-en a[data-en],body.lang-en strong[data-en],body.lang-en em[data-en]{display:inline;}
+body.lang-en span[data-es],body.lang-en a[data-es],body.lang-en strong[data-es],body.lang-en em[data-es]{display:none;}
+/* For flex/grid children that need flex/grid display preserved */
+.pill[data-en]{display:none;}
+body.lang-en .pill[data-en]{display:inline-flex;align-items:center;}
+body.lang-en .pill[data-es]{display:none;}
+
+/* ── NAV ── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:0.5px solid var(--border);background:var(--white);position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:16px;}
+.nav-logo img.lc{height:40px;width:auto;}
+.nav-div{width:0.5px;height:28px;background:rgba(0,0,0,0.15);}
+.nav-part{display:flex;flex-direction:column;gap:3px;}
+.nav-part-lbl{font-size:9px;color:var(--gray);letter-spacing:0.10em;text-transform:uppercase;}
+.nav-part img.lw{height:16px;width:auto;opacity:0.6;}
+.nav-links{display:flex;gap:14px;list-style:none;align-items:center;flex-wrap:nowrap;}
+.nav-links a{font-size:12.5px;color:var(--gray);text-decoration:none;transition:color .2s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:var(--black);}
+.nav-links a.active{font-weight:500;}
+.nav-firma{background:var(--accent2);color:#fff!important;padding:6px 12px;border-radius:2px;font-size:12px!important;font-weight:500!important;}
+.nav-creative{background:var(--creative);color:#fff!important;padding:6px 12px;border-radius:2px;font-size:12px!important;font-weight:500!important;}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hbg span{display:block;width:22px;height:1.5px;background:var(--black);}
+.nav-mob{display:none;flex-direction:column;background:var(--white);border-bottom:0.5px solid var(--border);}
+.nav-mob.open{display:flex;}
+.nav-mob a{font-size:13px;color:var(--gray);text-decoration:none;padding:11px 40px;border-bottom:0.5px solid var(--border);}
+
+/* ── HERO ── */
+.hero{padding:68px 40px 60px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;background:var(--dark);border-bottom:0.5px solid rgba(255,255,255,0.07);}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--creative2);margin-bottom:10px;}
+.hero h1{font-family:var(--fd);font-size:44px;line-height:1.10;font-weight:400;color:#fff;margin-bottom:18px;}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,0.36);}
+.hdesc{font-size:14.5px;line-height:1.75;color:rgba(255,255,255,0.56);margin-bottom:22px;max-width:410px;}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px;}
+.pill{display:inline-flex;align-items:center;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.70);font-size:11.5px;padding:5px 13px;border-radius:2px;border:0.5px solid rgba(255,255,255,0.10);}
+.pill-c{background:rgba(124,58,237,0.22);color:#c4b5fd;border-color:rgba(124,58,237,0.3);}
+.pill-b{background:rgba(5,150,105,0.22);color:#6ee7b7;border-color:rgba(5,150,105,0.3);}
+.hctas{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-p{background:var(--creative);color:#fff;padding:11px 22px;border-radius:2px;font-size:13.5px;font-weight:500;text-decoration:none;}
+.btn-s{background:transparent;color:#fff;padding:11px 22px;border-radius:2px;font-size:13.5px;text-decoration:none;border:0.5px solid rgba(255,255,255,0.22);}
+.krow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.kpi{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:18px;}
+.kv{font-family:var(--fd);font-size:30px;color:#fff;display:block;margin-bottom:3px;}
+.kl{font-size:11.5px;color:rgba(255,255,255,0.42);line-height:1.4;display:block;}
+
+/* ── BRIDGE BAND ── */
+.bband{background:var(--bridge);padding:26px 40px;display:flex;align-items:center;gap:28px;}
+.bband-ic{width:44px;height:44px;min-width:44px;background:rgba(255,255,255,0.18);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.bband h3{font-size:15px;font-weight:600;color:#fff;margin-bottom:2px;}
+.bband p{font-size:12.5px;color:rgba(255,255,255,0.76);line-height:1.5;}
+.bband-cta{margin-left:auto;background:rgba(255,255,255,0.18);color:#fff;padding:8px 16px;border-radius:2px;font-size:12px;font-weight:500;text-decoration:none;white-space:nowrap;border:0.5px solid rgba(255,255,255,0.28);flex-shrink:0;}
+
+/* ── SECTIONS ── */
+.sec{padding:56px 40px;border-bottom:0.5px solid var(--border);}
+.stag{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--creative);margin-bottom:9px;}
+.stag-b{color:var(--bridge);}
+.sec h2{font-family:var(--fd);font-size:32px;font-weight:400;line-height:1.18;margin-bottom:9px;}
+.ssub{font-size:14.5px;color:var(--gray);line-height:1.7;max-width:620px;margin-bottom:34px;}
+.note{font-size:11.5px;color:var(--gray);font-style:italic;margin-top:12px;}
+
+/* ── DEVICE GRID ── */
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.dcard{border:0.5px solid var(--border);border-radius:4px;overflow:hidden;}
+.dvis{height:120px;display:flex;align-items:center;justify-content:center;background:var(--light);}
+.dinfo{padding:16px;}
+.dbadge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;padding:3px 7px;border-radius:2px;margin-bottom:7px;}
+.bp{background:#F5F3FF;color:var(--creative);}
+.bs{background:#EFF6FF;color:#2563EB;}
+.bm{background:#FFF7ED;color:#C2410C;}
+.dn{font-size:14.5px;font-weight:600;color:var(--dark);margin-bottom:4px;}
+.dd{font-size:12.5px;color:var(--gray);line-height:1.55;margin-bottom:11px;}
+.ds{margin-bottom:11px;}
+.ds-item{font-size:11.5px;color:var(--gray);display:block;padding-left:12px;position:relative;margin-bottom:3px;}
+.ds-item::before{content:"·";color:var(--accent2);position:absolute;left:0;}
+.dp{font-size:13px;font-weight:600;color:var(--dark);margin-top:8px;}
+.dp small{font-size:11px;font-weight:400;color:var(--gray);}
+.btag{display:block;margin-top:6px;font-size:11px;color:var(--bridge);font-weight:500;}
+.btag::before{content:"✓ ";}
+
+/* ── LEVELS TABLE ── */
+.ltab{width:100%;border-collapse:collapse;font-size:12.5px;}
+.ltab th{background:var(--dark);color:#fff;font-size:10.5px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;padding:11px 13px;text-align:left;}
+.ltab td{padding:11px 13px;border-bottom:0.5px solid var(--border);}
+.ltab tr:nth-child(odd) td{background:var(--light);}
+.ltab tr:nth-child(even) td{background:#fff;}
+.lname{font-weight:600;color:var(--dark);}
+.pcol{font-weight:600;color:var(--creative);}
+.byes{color:var(--bridge);font-weight:500;}
+.bno{color:#ccc;}
+.tgt{font-size:11px;color:var(--gray);font-style:italic;background:#fafafa!important;}
+
+/* ── BRIDGE BOX ── */
+.bbox{background:linear-gradient(135deg,#064E3B,#065F46);border-radius:8px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+.btitle{font-family:var(--fd);font-size:28px;color:#fff;margin-bottom:9px;}
+.bdesc{font-size:13px;color:rgba(255,255,255,0.63);line-height:1.72;margin-bottom:18px;}
+.blist{display:flex;flex-direction:column;gap:10px;}
+.bi{display:flex;gap:9px;align-items:flex-start;}
+.bdot{width:18px;height:18px;min-width:18px;background:var(--bridge2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px;font-size:9.5px;color:#064E3B;font-weight:700;}
+.bit{font-size:12.5px;color:rgba(255,255,255,0.72);line-height:1.52;}
+.bit strong{color:#fff;display:block;margin-bottom:2px;}
+.bplats{display:flex;flex-direction:column;gap:8px;}
+.bplat{background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.12);border-radius:4px;padding:13px;}
+.bplat h4{font-size:12.5px;font-weight:600;color:#fff;margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.bpb{font-size:9px;background:var(--bridge2);color:#064E3B;padding:2px 5px;border-radius:2px;font-weight:700;}
+.bplat p{font-size:11.5px;color:rgba(255,255,255,0.52);line-height:1.48;}
+.bcompat h4{font-size:10.5px;font-weight:600;color:rgba(255,255,255,0.46);letter-spacing:0.09em;text-transform:uppercase;margin:12px 0 7px;}
+.bcgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.bci{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.08);border-radius:3px;padding:7px 9px;font-size:11px;color:rgba(255,255,255,0.58);}
+.bnote{background:rgba(255,255,255,0.07);border-left:2px solid var(--bridge2);padding:9px 13px;border-radius:0 3px 3px 0;font-size:11px;color:rgba(255,255,255,0.52);line-height:1.48;margin-top:11px;}
+
+/* ── SECTORS ── */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.scard{border:0.5px solid var(--border);border-radius:4px;padding:20px;}
+.sicon{font-size:24px;margin-bottom:9px;display:block;}
+.scard h4{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:5px;}
+.scard p{font-size:12px;color:var(--gray);line-height:1.58;}
+.sbr{display:block;margin-top:7px;font-size:11px;color:var(--bridge);font-weight:500;}
+
+/* ── ROI ── */
+.rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:14px;}
+.rbox{background:var(--light);border-radius:4px;padding:20px;text-align:center;}
+.rv{font-family:var(--fd);font-size:28px;color:var(--dark);display:block;margin-bottom:3px;}
+.rl{font-size:11px;color:var(--gray);line-height:1.4;display:block;}
+.ra .rv{color:var(--creative);}
+
+/* ── FORM ── */
+.fbox{background:var(--dark);border-radius:8px;padding:40px;}
+.fbox h2{font-family:var(--fd);font-size:28px;color:#fff;margin-bottom:5px;}
+.fbox .fintro{font-size:13px;color:rgba(255,255,255,0.50);margin-bottom:26px;display:block;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.ff{display:flex;flex-direction:column;gap:4px;}
+.ff.full{grid-column:1/-1;}
+.ff label{font-size:11px;color:rgba(255,255,255,0.50);font-weight:500;letter-spacing:0.04em;}
+.ff input,.ff select,.ff textarea{background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);color:#fff;padding:9px 12px;border-radius:2px;font-size:13px;font-family:var(--fb);outline:none;}
+.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--creative2);}
+.ff select option{background:#1a1a2e;}
+.ff textarea{resize:vertical;min-height:85px;}
+.fsub{margin-top:5px;background:var(--creative);color:#fff;padding:11px 24px;border:none;border-radius:2px;font-size:13.5px;font-weight:500;cursor:pointer;font-family:var(--fb);}
+.fnote{font-size:10.5px;color:rgba(255,255,255,0.26);margin-top:6px;display:block;}
+
+/* ── FOOTER ── */
+footer{padding:32px 40px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.ftxt{font-size:11.5px;color:var(--gray);}
+.flinks{display:flex;gap:16px;}
+.flinks a{font-size:11.5px;color:var(--gray);text-decoration:none;}
+.flinks a:hover{color:var(--black);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .dgrid{grid-template-columns:repeat(2,1fr);}
+  .bbox{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}.hbg{display:flex;}
+  .lang-bar-inner,.nav,.hero,.sec,.bband{padding-left:20px;padding-right:20px;}
+  .hero{grid-template-columns:1fr;padding-top:40px;}
+  .dgrid,.sgrid,.rgrid{grid-template-columns:1fr 1fr;}
+  .fgrid{grid-template-columns:1fr;}
+  .bcgrid{grid-template-columns:1fr;}
+  .bband{flex-direction:column;gap:14px;}
+  .bband-cta{margin-left:0;}
+  footer{flex-direction:column;gap:10px;text-align:center;}
+}
+@media(max-width:480px){
+  .dgrid,.sgrid,.rgrid{grid-template-columns:1fr;}
+  .hero h1{font-size:32px;}.sec h2{font-size:24px;}
+}
+</style>
+</head>
+<body id="body-root">
+
+<!-- LANG BAR — full width with inner constraint -->
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <img class="lc" src="assets/contecnow-logo.png" alt="CONTECNOW" onerror="this.style.display='none'">
+      <div class="nav-div"></div>
+      <div class="nav-part">
+        <span class="nav-part-lbl" data-es>Submayorista</span>
+        <span class="nav-part-lbl" data-en>Sub-wholesaler</span>
+        <img class="lw" src="assets/wacom-logo.gif" alt="Wacom" onerror="this.style.display='none'">
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href='/'><span data-es>Inicio</span><span data-en>Home</span></a></li>
+      <li><a class='nav-firma' href='/waas'><span data-es>WaaS Firma</span><span data-en>WaaS Signature</span></a></li>
+      <li><a class='nav-creative active' href='/waas-creative'>WaaS Creative</a></li>
+      <li><a href="#demo" class="nav-creative"><span data-es>Solicitar demo</span><span data-en>Request demo</span></a></li>
+    </ul>
+    <button class="hbg" onclick="document.querySelector('.nav-mob').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mob">
+    <a href='/'><span data-es>Inicio</span><span data-en>Home</span></a>
+    <a href='/waas'><span data-es>WaaS Firma</span><span data-en>WaaS Signature</span></a>
+    <a href='/waas-creative'>WaaS Creative</a>
+    <a href="#demo"><span data-es>Solicitar demo</span><span data-en>Request demo</span></a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <p class="eyebrow"><span data-es>WaaS Creative · Nuevo</span><span data-en>WaaS Creative · New</span></p>
+      <h1>
+        <span data-es>Wacom profesional para equipos <em>creativos.</em></span>
+        <span data-en>Professional Wacom for <em>creative</em> teams.</span>
+      </h1>
+      <p class="hdesc" data-es>Pantallas Cintiq Pro, tabletas Intuos Pro y Wacom Movink en modalidad de servicio mensual. Sin CAPEX. Actualización tecnológica incluida. Bridge para trabajo remoto.</p>
+      <p class="hdesc" data-en>Cintiq Pro displays, Intuos Pro tablets and Wacom Movink as a monthly service. Zero CAPEX. Technology refresh included. Bridge for remote work.</p>
+      <div class="pills">
+        <span class="pill">Cintiq Pro 17/22/27</span>
+        <span class="pill">Intuos Pro 2025</span>
+        <span class="pill">Movink</span>
+        <span class="pill pill-c">0 € CAPEX</span>
+        <span class="pill pill-b" data-es>Bridge incluido</span>
+        <span class="pill pill-b" data-en>Bridge included</span>
+      </div>
+      <div class="hctas">
+        <a href="#demo" class="btn-p" data-es>Solicitar demo creativa</a>
+        <a href="#demo" class="btn-p" data-en>Request creative demo</a>
+        <a href="#niveles" class="btn-s" data-es>Ver niveles</a>
+        <a href="#niveles" class="btn-s" data-en>See levels</a>
+      </div>
+    </div>
+    <div>
+      <div class="krow">
+        <div class="kpi">
+          <span class="kv">0 €</span>
+          <span class="kl" data-es>Inversión inicial. CAPEX cero.</span>
+          <span class="kl" data-en>Zero upfront investment.</span>
+        </div>
+        <div class="kpi">
+          <span class="kv">48 m</span>
+          <span class="kl" data-es>Contrato máximo. Hardware nuevo al vencimiento.</span>
+          <span class="kl" data-en>Max contract. New hardware on renewal.</span>
+        </div>
+        <div class="kpi">
+          <span class="kv">Bridge</span>
+          <span class="kl" data-es>Plena compatibilidad de lápiz en remoto.</span>
+          <span class="kl" data-en>Full pen compatibility remotely.</span>
+        </div>
+        <div class="kpi">
+          <span class="kv">&lt;24h</span>
+          <span class="kl" data-es>Sustitución garantizada.</span>
+          <span class="kl" data-en>Guaranteed replacement.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRIDGE BAND -->
+  <div class="bband">
+    <div class="bband-ic">🌐</div>
+    <div>
+      <h3><span data-es>Wacom Bridge incluido en niveles Pro y Enterprise</span><span data-en>Wacom Bridge included in Pro and Enterprise levels</span></h3>
+      <p data-es>Trabaja con tu Cintiq Pro o Intuos Pro en AWS, Citrix o Splashtop con plena compatibilidad de presión, inclinación y ExpressKeys.</p>
+      <p data-en>Use your Cintiq Pro or Intuos Pro on AWS, Citrix or Splashtop with full pressure, tilt and ExpressKeys compatibility.</p>
+    </div>
+    <a href="#bridge" class="bband-cta"><span data-es>Más info sobre Bridge ↓</span><span data-en>About Bridge ↓</span></a>
+  </div>
+
+  <!-- PRODUCTOS -->
+  <section class="sec">
+    <p class="stag"><span data-es>Gama Creative</span><span data-en>Creative Range</span></p>
+    <h2><span data-es>Hardware Wacom profesional en servicio mensual</span><span data-en>Professional Wacom hardware as a monthly service</span></h2>
+    <p class="ssub" data-es>Todos los modelos de la gama creativa disponibles en WaaS. Stock garantizado vía Esprinet como mayorista exclusivo.</p>
+    <p class="ssub" data-en>All Wacom creative range models available in WaaS. Stock guaranteed via Esprinet as exclusive distributor.</p>
+
+    <div class="dgrid">
+      <!-- Cintiq Pro 17 -->
+      <div class="dcard">
+        <div class="dvis">
+          <svg width="72" height="52" viewBox="0 0 72 52"><rect x="2" y="2" width="68" height="40" rx="3" fill="#17233A" opacity=".9"/><rect x="6" y="6" width="60" height="32" rx="1.5" fill="#7C3AED" opacity=".25"/><rect x="26" y="44" width="20" height="3" rx="1" fill="#17233A" opacity=".4"/></svg>
+        </div>
+        <div class="dinfo">
+          <span class="dbadge bp">Cintiq Pro 17</span>
+          <p class="dn">Wacom Cintiq Pro 17</p>
+          <p class="dd" data-es>Pantalla creativa 4K 17.3". Pro Pen 3, 8.192 niveles. Ideal para equipos con espacio limitado.</p>
+          <p class="dd" data-en>4K creative display 17.3". Pro Pen 3, 8,192 levels. Ideal for space-constrained teams.</p>
+          <div class="ds">
+            <span class="ds-item">17.3" · 4K · 120Hz</span>
+            <span class="ds-item">99% DCI-P3 · Pantone™</span>
+            <span class="ds-item">USB-C · Win / Mac / Linux</span>
+          </div>
+          <p class="dp" data-es>Desde <strong>~65 €</strong>/mes <small>s/IVA · 48m</small></p>
+          <p class="dp" data-en>From <strong>~€65</strong>/mo <small>excl. VAT · 48m</small></p>
+          <span class="btag" data-es>Compatible Wacom Bridge</span>
+          <span class="btag" data-en>Wacom Bridge compatible</span>
+        </div>
+      </div>
+
+      <!-- Cintiq Pro 22 -->
+      <div class="dcard">
+        <div class="dvis">
+          <svg width="84" height="56" viewBox="0 0 84 56"><rect x="2" y="2" width="80" height="46" rx="3" fill="#17233A" opacity=".9"/><rect x="6" y="6" width="72" height="38" rx="1.5" fill="#7C3AED" opacity=".30"/><rect x="30" y="50" width="24" height="3" rx="1" fill="#17233A" opacity=".4"/></svg>
+        </div>
+        <div class="dinfo">
+          <span class="dbadge bp">Cintiq Pro 22 · <span data-es>Más popular</span><span data-en>Most popular</span></span>
+          <p class="dn">Wacom Cintiq Pro 22</p>
+          <p class="dd" data-es>21.5" 4K multi-touch. El más elegido por estudios de diseño y fotografía.</p>
+          <p class="dd" data-en>21.5" 4K multi-touch. Most chosen by design and photography studios.</p>
+          <div class="ds">
+            <span class="ds-item">21.5" · 4K · 120Hz · Multi-touch</span>
+            <span class="ds-item">98% DCI-P3 · 99% Adobe RGB</span>
+            <span class="ds-item" data-es>Garantía 3 años on-site Europa</span>
+            <span class="ds-item" data-en>3-year on-site warranty Europe</span>
+          </div>
+          <p class="dp" data-es>Desde <strong>~95 €</strong>/mes <small>s/IVA · 48m</small></p>
+          <p class="dp" data-en>From <strong>~€95</strong>/mo <small>excl. VAT · 48m</small></p>
+          <span class="btag" data-es>Compatible Wacom Bridge</span>
+          <span class="btag" data-en>Wacom Bridge compatible</span>
+        </div>
+      </div>
+
+      <!-- Cintiq Pro 27 -->
+      <div class="dcard">
+        <div class="dvis">
+          <svg width="96" height="62" viewBox="0 0 96 62"><rect x="2" y="2" width="92" height="50" rx="3" fill="#17233A" opacity=".9"/><rect x="6" y="6" width="84" height="42" rx="1.5" fill="#7C3AED" opacity=".35"/><rect x="34" y="54" width="28" height="4" rx="1" fill="#17233A" opacity=".4"/></svg>
+        </div>
+        <div class="dinfo">
+          <span class="dbadge bp">Cintiq Pro 27 · <span data-es>Top gama</span><span data-en>Top range</span></span>
+          <p class="dn">Wacom Cintiq Pro 27</p>
+          <p class="dd" data-es>27" 4K 120Hz. La pantalla más avanzada de Wacom. Para animación 3D, VFX y diseño editorial.</p>
+          <p class="dd" data-en>27" 4K 120Hz. Wacom's most advanced display. For 3D animation, VFX and editorial design.</p>
+          <div class="ds">
+            <span class="ds-item">27" · 4K · 120Hz · HDR</span>
+            <span class="ds-item">99% Adobe RGB · 98% DCI-P3</span>
+            <span class="ds-item" data-es>Compatible Linux VFX</span>
+            <span class="ds-item" data-en>Linux VFX compatible</span>
+          </div>
+          <p class="dp" data-es>Desde <strong>~140 €</strong>/mes <small>s/IVA · 48m</small></p>
+          <p class="dp" data-en>From <strong>~€140</strong>/mo <small>excl. VAT · 48m</small></p>
+          <span class="btag" data-es>Compatible Wacom Bridge</span>
+          <span class="btag" data-en>Wacom Bridge compatible</span>
+        </div>
+      </div>
+
+      <!-- Intuos Pro -->
+      <div class="dcard">
+        <div class="dvis">
+          <svg width="72" height="50" viewBox="0 0 72 50"><rect x="4" y="8" width="64" height="36" rx="4" fill="#17233A" opacity=".85"/><rect x="8" y="12" width="56" height="28" rx="2" fill="#4A8FA8" opacity=".15"/><circle cx="60" cy="12" r="2.5" fill="#4A8FA8" opacity=".6"/><line x1="36" y1="2" x2="36" y2="9" stroke="#4A8FA8" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="dinfo">
+          <span class="dbadge bs">Intuos Pro 2025</span>
+          <p class="dn">Wacom Intuos Pro (2025)</p>
+          <p class="dd" data-es>Rediseñado desde cero. Pro Pen 3, dual pen, Bluetooth 5.3, 16h batería. Ultra-slim en magnesio.</p>
+          <p class="dd" data-en>Completely redesigned. Pro Pen 3, dual pen, Bluetooth 5.3, 16h battery. Ultra-slim magnesium body.</p>
+          <div class="ds">
+            <span class="ds-item" data-es>3 tamaños: S / M / L</span>
+            <span class="ds-item" data-en>3 sizes: S / M / L</span>
+            <span class="ds-item">Bluetooth 5.3 · 16h</span>
+            <span class="ds-item" data-es>Ilustración, foto, diseño</span>
+            <span class="ds-item" data-en>Illustration, photo, design</span>
+          </div>
+          <p class="dp" data-es>Desde <strong>~22 €</strong>/mes <small>s/IVA · 36m</small></p>
+          <p class="dp" data-en>From <strong>~€22</strong>/mo <small>excl. VAT · 36m</small></p>
+          <span class="btag" data-es>Compatible Wacom Bridge</span>
+          <span class="btag" data-en>Wacom Bridge compatible</span>
+        </div>
+      </div>
+
+      <!-- Movink -->
+      <div class="dcard">
+        <div class="dvis">
+          <svg width="44" height="68" viewBox="0 0 44 68"><rect x="2" y="2" width="40" height="62" rx="5" fill="#17233A" opacity=".9"/><rect x="6" y="6" width="32" height="54" rx="3" fill="#7C3AED" opacity=".22"/><rect x="14" y="65" width="16" height="3" rx="1.5" fill="#4A8FA8" opacity=".5"/></svg>
+        </div>
+        <div class="dinfo">
+          <span class="dbadge bm">Movink · OLED</span>
+          <p class="dn">Wacom Movink 13</p>
+          <p class="dd" data-es>La más delgada y ligera. 4mm, 420g, OLED FHD. Un solo cable USB-C.</p>
+          <p class="dd" data-en>Thinnest and lightest. 4mm, 420g, OLED FHD. One USB-C cable.</p>
+          <div class="ds">
+            <span class="ds-item">13.3" OLED · FHD · DCI-P3</span>
+            <span class="ds-item">4mm · 420g · USB-C</span>
+            <span class="ds-item" data-es>Profesionales móviles</span>
+            <span class="ds-item" data-en>Mobile professionals</span>
+          </div>
+          <p class="dp" data-es>Desde <strong>~38 €</strong>/mes <small>s/IVA · 36m</small></p>
+          <p class="dp" data-en>From <strong>~€38</strong>/mo <small>excl. VAT · 36m</small></p>
+        </div>
+      </div>
+
+      <!-- Cintiq 16/24 -->
+      <div class="dcard">
+        <div class="dvis">
+          <svg width="72" height="50" viewBox="0 0 72 50"><rect x="2" y="4" width="68" height="38" rx="3" fill="#1E3A5F" opacity=".85"/><rect x="6" y="8" width="60" height="30" rx="1.5" fill="#2563EB" opacity=".18"/><rect x="26" y="44" width="20" height="3" rx="1" fill="#1e3a5f" opacity=".4"/></svg>
+        </div>
+        <div class="dinfo">
+          <span class="dbadge bs"><span data-es>Cintiq · Entrada</span><span data-en>Cintiq · Entry</span></span>
+          <p class="dn">Wacom Cintiq 16 / 24</p>
+          <p class="dd" data-es>Punto de entrada para dibujar en pantalla. 2.5K, Pro Pen 3, anti-reflejo.</p>
+          <p class="dd" data-en>Entry point for on-screen drawing. 2.5K, Pro Pen 3, anti-glare.</p>
+          <div class="ds">
+            <span class="ds-item">16" <span data-es>o</span><span data-en>or</span> 23.8" · 2.5K</span>
+            <span class="ds-item">Pro Pen 3 · USB-C / HDMI</span>
+            <span class="ds-item" data-es>Multi-touch en Cintiq 24</span>
+            <span class="ds-item" data-en>Multi-touch on Cintiq 24</span>
+          </div>
+          <p class="dp" data-es>Desde <strong>~28 €</strong>/mes <small>s/IVA · 36m</small></p>
+          <p class="dp" data-en>From <strong>~€28</strong>/mo <small>excl. VAT · 36m</small></p>
+        </div>
+      </div>
+    </div>
+    <p class="note" data-es>* Cuotas orientativas sobre precio neto SRP Wacom vía Esprinet. Precio final según volumen y configuración negociados con CONTECNOW.</p>
+    <p class="note" data-en>* Indicative fees based on Wacom net SRP via Esprinet. Final price subject to volume and configuration negotiated with CONTECNOW.</p>
+  </section>
+
+  <!-- NIVELES -->
+  <section class="sec" id="niveles">
+    <p class="stag"><span data-es>Estructura del servicio</span><span data-en>Service structure</span></p>
+    <h2><span data-es>4 niveles WaaS Creative</span><span data-en>4 WaaS Creative levels</span></h2>
+    <p class="ssub" data-es>Desde el freelance hasta el gran estudio. Cuota mensual por dispositivo, contratos 24–48 meses, gestionado vía Esprinet.</p>
+    <p class="ssub" data-en>From freelancer to large studio. Monthly fee per device, 24–48 month contracts, managed via Esprinet.</p>
+    <table class="ltab">
+      <thead>
+        <tr>
+          <th><span data-es>Nivel</span><span data-en>Level</span></th>
+          <th>Hardware</th>
+          <th>Software</th>
+          <th>Wacom Bridge</th>
+          <th>SLA</th>
+          <th><span data-es>Contrato</span><span data-en>Contract</span></th>
+          <th><span data-es>€/disp/mes</span><span data-en>€/dev/mo</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lname">Starter</td>
+          <td>Cintiq 16 · Intuos Pro S/M</td>
+          <td><span data-es>Clip Studio 6m gratis</span><span data-en>Clip Studio 6mo free</span></td>
+          <td class="bno">—</td><td>72h</td><td>24 m</td>
+          <td class="pcol">~22–28 €</td>
+        </tr>
+        <tr><td colspan="7" class="tgt"><span data-es>Target: freelances, diseñadores junior, educación creativa</span><span data-en>Target: freelancers, junior designers, creative education</span></td></tr>
+        <tr>
+          <td class="lname">Professional</td>
+          <td>Cintiq 24 · Intuos Pro L · Movink</td>
+          <td>Toon Boom 3m + Capture One 3m</td>
+          <td class="bno">—</td><td>48h</td><td>36 m</td>
+          <td class="pcol">~38–55 €</td>
+        </tr>
+        <tr><td colspan="7" class="tgt"><span data-es>Target: estudios medianos, agencias, fotografía profesional</span><span data-en>Target: mid-size studios, agencies, professional photography</span></td></tr>
+        <tr>
+          <td class="lname">Pro + Bridge</td>
+          <td>Cintiq Pro 17 · 22</td>
+          <td><span data-es>Suite completa + Bridge</span><span data-en>Full suite + Bridge</span></td>
+          <td class="byes">✓ <span data-es>Incluido</span><span data-en>Included</span></td>
+          <td>24h</td><td>48 m</td>
+          <td class="pcol">~65–95 €</td>
+        </tr>
+        <tr><td colspan="7" class="tgt"><span data-es>Target: estudios con VDI/cloud, postproducción</span><span data-en>Target: VDI/cloud studios, post-production</span></td></tr>
+        <tr>
+          <td class="lname">Enterprise</td>
+          <td>Cintiq Pro 27 · <span data-es>Mix a medida</span><span data-en>Custom mix</span></td>
+          <td><span data-es>Full stack + integraciones</span><span data-en>Full stack + integrations</span></td>
+          <td class="byes">✓ AWS · Splashtop</td>
+          <td>4h</td><td>48 m</td>
+          <td class="pcol"><span data-es>Negociado</span><span data-en>Negotiated</span></td>
+        </tr>
+        <tr><td colspan="7" class="tgt"><span data-es>Target: estudios VFX, broadcasters, multinacionales</span><span data-en>Target: VFX studios, broadcasters, multinationals</span></td></tr>
+      </tbody>
+    </table>
+    <p class="note" data-es>* Bridge requiere suscripción activa. Incluido en Pro+Bridge y Enterprise sin sobrecoste. Los modelos de firma (STU, DTU) no son compatibles con Bridge.</p>
+    <p class="note" data-en>* Bridge requires active subscription. Included in Pro+Bridge and Enterprise at no extra cost. Signature models (STU, DTU) are not Bridge compatible.</p>
+  </section>
+
+  <!-- BRIDGE -->
+  <section class="sec" id="bridge">
+    <p class="stag stag-b">Wacom Bridge</p>
+    <h2><span data-es>Trabaja en remoto como si estuvieras en la oficina</span><span data-en>Work remotely as if you were in the office</span></h2>
+    <p class="ssub" data-es>Bridge conecta tu Wacom local con tu entorno remoto —cloud, VDI, servidor— con plena compatibilidad de driver. Presión, inclinación, ExpressKeys y perfiles de aplicación, todo a distancia.</p>
+    <p class="ssub" data-en>Bridge connects your local Wacom to your remote environment —cloud, VDI, server— with full driver compatibility. Pressure, tilt, ExpressKeys and app profiles, all working remotely.</p>
+    <div class="bbox">
+      <div>
+        <h3 class="btitle"><span data-es>Wacom Bridge para creativos</span><span data-en>Wacom Bridge for creatives</span></h3>
+        <p class="bdesc" data-es>Los estudios con escritorios virtualizados necesitan que su Cintiq Pro funcione igual en remoto que en local. Bridge lo resuelve sin redirección USB y con plena funcionalidad de lápiz.</p>
+        <p class="bdesc" data-en>Studios with virtualized desktops need their Cintiq Pro to work the same remotely as locally. Bridge solves this with no USB redirection and full pen functionality.</p>
+        <div class="blist">
+          <div class="bi">
+            <div class="bdot">✓</div>
+            <div class="bit">
+              <strong><span data-es>Presión e inclinación completas en remoto</span><span data-en>Full pressure and tilt remotely</span></strong>
+              <span data-es>Los 8.192 niveles del Pro Pen 3 funcionan igual en el servidor remoto que en local.</span>
+              <span data-en>The Pro Pen 3's 8,192 levels work identically on the remote server as locally.</span>
+            </div>
+          </div>
+          <div class="bi">
+            <div class="bdot">✓</div>
+            <div class="bit">
+              <strong><span data-es>Sin redirección USB</span><span data-en>No USB redirection</span></strong>
+              <span data-es>Conexión controlador a controlador. Sin latencia ni incompatibilidades USB sobre IP.</span>
+              <span data-en>Controller-to-controller. No latency or USB-over-IP compatibility issues.</span>
+            </div>
+          </div>
+          <div class="bi">
+            <div class="bdot">✓</div>
+            <div class="bit">
+              <strong><span data-es>Perfiles de aplicación preservados</span><span data-en>Application profiles preserved</span></strong>
+              <span data-es>ExpressKeys y perfiles de Photoshop, After Effects y Blender se mantienen en remoto.</span>
+              <span data-en>ExpressKeys and Photoshop, After Effects, Blender profiles maintained remotely.</span>
+            </div>
+          </div>
+          <div class="bi">
+            <div class="bdot">✓</div>
+            <div class="bit">
+              <strong><span data-es>Demo remota vía Teams, Zoom o Webex</span><span data-en>Remote demo via Teams, Zoom or Webex</span></strong>
+              <span data-es>Comparte tu sesión remota en reuniones para mostrar trabajo a clientes.</span>
+              <span data-en>Share your remote session in meetings to show work to clients.</span>
+            </div>
+          </div>
+          <div class="bi">
+            <div class="bdot">✓</div>
+            <div class="bit">
+              <strong>Windows Ink + Wintab</strong>
+              <span data-es>Compatible con ambos protocolos, local y remotamente.</span>
+              <span data-en>Compatible with both protocols, locally and remotely.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="bplats">
+          <div class="bplat">
+            <h4>AWS WorkSpaces <span class="bpb" data-es>Certificado</span><span class="bpb" data-en>Certified</span></h4>
+            <p data-es>Integración oficial con AWS. Estudios con EC2 o WorkSpaces usan su Cintiq Pro con plena funcionalidad desde cualquier ubicación.</p>
+            <p data-en>Official AWS integration. Studios with EC2 or WorkSpaces use their Cintiq Pro with full functionality from any location.</p>
+          </div>
+          <div class="bplat">
+            <h4>Splashtop <span class="bpb" data-es>Certificado</span><span class="bpb" data-en>Certified</span></h4>
+            <p data-es>Splashtop Business Access y Enterprise soportan Bridge de forma nativa. Popular en estudios medianos por coste-rendimiento.</p>
+            <p data-en>Splashtop Business Access and Enterprise support Bridge natively. Popular in mid-size studios for cost-performance.</p>
+          </div>
+          <div class="bplat">
+            <h4>Citrix / VMware</h4>
+            <p data-es>Compatible con Citrix y VMware Horizon. Validar configuración con CONTECNOW antes del despliegue.</p>
+            <p data-en>Compatible with Citrix and VMware Horizon. Validate configuration with CONTECNOW before deployment.</p>
+          </div>
+        </div>
+        <div class="bcompat">
+          <h4><span data-es>Dispositivos compatibles</span><span data-en>Compatible devices</span></h4>
+          <div class="bcgrid">
+            <div class="bci">Cintiq Pro 17 (DTH172)</div>
+            <div class="bci">Cintiq Pro 22 (DTH227)</div>
+            <div class="bci">Cintiq Pro 27 (DTH271)</div>
+            <div class="bci">Intuos Pro (PTH460/660/860)</div>
+            <div class="bci">Intuos Pro 2025</div>
+            <div class="bci">Mobile Studio Pro</div>
+          </div>
+        </div>
+        <div class="bnote">
+          <span data-es>⚠ Bridge requiere suscripción activa. CONTECNOW la incluye en niveles Pro+Bridge y Enterprise. Los modelos de firma (STU, DTU) no son compatibles — Bridge es exclusivo de la gama creativa.</span>
+          <span data-en>⚠ Bridge requires an active subscription. CONTECNOW includes it in Pro+Bridge and Enterprise. Signature models (STU, DTU) are not compatible — Bridge is exclusive to the creative range.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTORES -->
+  <section class="sec">
+    <p class="stag"><span data-es>Casos de uso</span><span data-en>Use cases</span></p>
+    <h2><span data-es>¿Quién usa WaaS Creative?</span><span data-en>Who uses WaaS Creative?</span></h2>
+    <p class="ssub" data-es>Cualquier empresa donde varios profesionales usen Wacom de forma continua. WaaS elimina la gestión de activos, garantiza equipos actualizados y reduce el coste total.</p>
+    <p class="ssub" data-en>Any company where multiple professionals use Wacom continuously. WaaS eliminates asset management, guarantees updated equipment and reduces total cost.</p>
+    <div class="sgrid">
+      <div class="scard">
+        <span class="sicon">🎬</span>
+        <h4><span data-es>Producción audiovisual y VFX</span><span data-en>Audiovisual & VFX</span></h4>
+        <p data-es>Estudios de animación y VFX con flujos Citrix o AWS. Bridge es clave para el workflow híbrido.</p>
+        <p data-en>Animation and VFX studios with Citrix or AWS workflows. Bridge is key for hybrid workflows.</p>
+        <span class="sbr">✓ Bridge · Enterprise</span>
+      </div>
+      <div class="scard">
+        <span class="sicon">🎨</span>
+        <h4><span data-es>Agencias de diseño y publicidad</span><span data-en>Design & advertising agencies</span></h4>
+        <p data-es>Agencias con 5-50 creativos. Equipos uniformes y actualizados sin gestionar inventario. WaaS Professional.</p>
+        <p data-en>Agencies with 5-50 creatives. Uniform, updated equipment without inventory management. WaaS Professional.</p>
+      </div>
+      <div class="scard">
+        <span class="sicon">📸</span>
+        <h4><span data-es>Fotografía y retoque profesional</span><span data-en>Photography & retouching</span></h4>
+        <p data-es>Estudios de fotografía y laboratorios de retoque. Intuos Pro L o Cintiq Pro 22 son los dispositivos estrella.</p>
+        <p data-en>Photography studios and retouching labs. Intuos Pro L or Cintiq Pro 22 are the star devices.</p>
+      </div>
+      <div class="scard">
+        <span class="sicon">🏗️</span>
+        <h4><span data-es>Arquitectura y diseño industrial</span><span data-en>Architecture & industrial design</span></h4>
+        <p data-es>Flujos BIM o CAD. Cintiq Pro 27 para 3D. Bridge para acceso remoto a workstations.</p>
+        <p data-en>BIM or CAD workflows. Cintiq Pro 27 for 3D. Bridge for remote workstation access.</p>
+        <span class="sbr">✓ Bridge · Pro</span>
+      </div>
+      <div class="scard">
+        <span class="sicon">📡</span>
+        <h4><span data-es>Broadcasters y medios</span><span data-en>Broadcasters & media</span></h4>
+        <p data-es>Cadenas de TV con equipos de motion design. Cintiq Pro 22/27 en entornos virtualizados.</p>
+        <p data-en>TV channels with motion design teams. Cintiq Pro 22/27 in virtualized environments.</p>
+        <span class="sbr">✓ Bridge · Enterprise</span>
+      </div>
+      <div class="scard">
+        <span class="sicon">🎓</span>
+        <h4><span data-es>Educación creativa</span><span data-en>Creative education</span></h4>
+        <p data-es>Escuelas de diseño y universidades. WaaS Starter dota aulas completas sin inversión en activos.</p>
+        <p data-en>Design schools and universities. WaaS Starter equips full classrooms without asset investment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI -->
+  <section class="sec">
+    <p class="stag"><span data-es>Retorno de inversión</span><span data-en>Return on investment</span></p>
+    <h2><span data-es>El argumento financiero</span><span data-en>The financial case</span></h2>
+    <p class="ssub" data-es>10 Cintiq Pro 22 comprados vs. en WaaS a 48 meses.</p>
+    <p class="ssub" data-en>10 Cintiq Pro 22 purchased vs. WaaS at 48 months.</p>
+    <div class="rgrid">
+      <div class="rbox">
+        <span class="rv">9.500 €</span>
+        <span class="rl" data-es>Coste compra directa × 10 Cintiq Pro 22</span>
+        <span class="rl" data-en>Direct purchase cost × 10 Cintiq Pro 22</span>
+      </div>
+      <div class="rbox ra">
+        <span class="rv">950 €</span>
+        <span class="rl" data-es>Coste WaaS mensual × 10 unidades</span>
+        <span class="rl" data-en>Monthly WaaS cost × 10 units</span>
+      </div>
+      <div class="rbox">
+        <span class="rv">100%</span>
+        <span class="rl" data-es>OPEX deducible en el ejercicio</span>
+        <span class="rl" data-en>OPEX deductible in fiscal year</span>
+      </div>
+      <div class="rbox ra">
+        <span class="rv">0 €</span>
+        <span class="rl" data-es>Gestión de activos y mantenimiento</span>
+        <span class="rl" data-en>Asset management & maintenance</span>
+      </div>
+    </div>
+    <p class="note" data-es>Cálculo ilustrativo. Ahorro real según condiciones negociadas con Esprinet vía CONTECNOW.</p>
+    <p class="note" data-en>Illustrative calculation. Real savings subject to conditions negotiated with Esprinet via CONTECNOW.</p>
+  </section>
+
+  <!-- FORM -->
+  <section class="sec" id="demo">
+    <div class="fbox">
+      <h2><span data-es>Solicitar demo WaaS Creative</span><span data-en>Request WaaS Creative demo</span></h2>
+      <span class="fintro" data-es>Cuéntanos tu equipo y flujo de trabajo. Te preparamos una propuesta personalizada.</span>
+      <span class="fintro" data-en>Tell us about your team and workflow. We'll prepare a personalised proposal.</span>
+      <form id='cf' method='POST' name='waas-creative'>
+        <input type="hidden" name="form-name" value="waas-creative">
+        <p style="display:none"><input name="bot-field"></p>
+        <div class="fgrid">
+          <div class="ff">
+            <label><span data-es>Nombre y apellido *</span><span data-en>Full name *</span></label>
+            <input type="text" name="nombre" required>
+          </div>
+          <div class="ff">
+            <label><span data-es>Email corporativo *</span><span data-en>Corporate email *</span></label>
+            <input type="email" name="email" required id="em-c">
+          </div>
+          <div class="ff">
+            <label><span data-es>Empresa *</span><span data-en>Company *</span></label>
+            <input type="text" name="empresa" required>
+          </div>
+          <div class="ff">
+            <label><span data-es>Dispositivo de interés</span><span data-en>Device of interest</span></label>
+            <select name="dispositivo">
+              <option>Cintiq Pro 17</option>
+              <option>Cintiq Pro 22</option>
+              <option>Cintiq Pro 27</option>
+              <option>Intuos Pro 2025</option>
+              <option>Wacom Movink 13</option>
+              <option>Cintiq 16 / 24</option>
+              <option>Mix</option>
+            </select>
+          </div>
+          <div class="ff">
+            <label><span data-es>Nº de dispositivos</span><span data-en>No. of devices</span></label>
+            <select name="unidades">
+              <option>1–5</option><option>6–20</option><option>21–50</option><option>50+</option>
+            </select>
+          </div>
+          <div class="ff">
+            <label><span data-es>¿Necesitas Wacom Bridge?</span><span data-en>Need Wacom Bridge?</span></label>
+            <select name="bridge">
+              <option value="vdi_yes"><span data-es>Sí, tenemos VDI/cloud</span><span data-en>Yes, VDI/cloud environment</span></option>
+              <option value="unsure"><span data-es>No lo sé, necesito info</span><span data-en>Not sure, need info</span></option>
+              <option value="no"><span data-es>No, trabajo local</span><span data-en>No, local work only</span></option>
+            </select>
+          </div>
+          <div class="ff full">
+            <label><span data-es>Flujo de trabajo creativo</span><span data-en>Creative workflow</span></label>
+            <textarea name="mensaje" placeholder="Ej: estudio VFX 12 personas, After Effects en AWS WorkSpaces, necesitamos Bridge..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="fsub">
+          <span data-es>Solicitar propuesta WaaS Creative</span>
+          <span data-en>Request WaaS Creative proposal</span>
+        </button>
+        <span class="fnote" data-es>Solo emails corporativos · CONTECNOW responde en &lt;24h laborables.</span>
+        <span class="fnote" data-en>Corporate emails only · CONTECNOW responds within 24 working hours.</span>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p class="ftxt">© 2025 CONTECNOW · <span data-es>Distribuidor y submayorista Wacom · Mayorista: Esprinet</span><span data-en>Wacom Distributor and Sub-wholesaler · Wholesaler: Esprinet</span></p>
+    <div class="flinks">
+      <a href='/'><span data-es>Inicio</span><span data-en>Home</span></a>
+      <a href='/waas'><span data-es>WaaS Firma</span><span data-en>WaaS Signature</span></a>
+      <a href='/waas-creative'>WaaS Creative</a>
+    </div>
+  </footer>
+
+</div><!-- end page-wrap -->
+
+<script>
+function setLang(l) {
+  var body = document.getElementById('body-root');
+  var btnEs = document.getElementById('btn-es');
+  var btnEn = document.getElementById('btn-en');
+  if (l === 'en') {
+    body.classList.add('lang-en');
+    btnEn.classList.add('active'); btnEs.classList.remove('active');
+    document.getElementById('html-root').setAttribute('lang', 'en');
+    document.title = 'CONTECNOW · WaaS Creative — Wacom for Creative Professionals';
+  } else {
+    body.classList.remove('lang-en');
+    btnEs.classList.add('active'); btnEn.classList.remove('active');
+    document.getElementById('html-root').setAttribute('lang', 'es');
+    document.title = 'CONTECNOW · WaaS Creative — Wacom para Profesionales Creativos';
+  }
+  try { sessionStorage.setItem('waac-lang', l); } catch(e) {}
+}
+// Restore saved preference
+(function() {
+  try {
+    var s = sessionStorage.getItem('waac-lang');
+    if (s === 'en') setLang('en');
+  } catch(e) {}
+})();
+// Email validation
+document.getElementById('cf').addEventListener('submit', function(e) {
+  var email = document.getElementById('em-c').value.toLowerCase();
+  var blocked = ['gmail','hotmail','outlook','yahoo','icloud','live','msn','aol','gmx','protonmail','tutanota','yandex'];
+  if (blocked.some(function(d) { return email.indexOf('@' + d + '.') !== -1; })) {
+    e.preventDefault();
+    var isEn = document.getElementById('body-root').classList.contains('lang-en');
+    alert(isEn ? 'Please use a corporate email.' : 'Por favor, usa un email corporativo.');
+  }
+});
+</script>
+</body>
+</html>
